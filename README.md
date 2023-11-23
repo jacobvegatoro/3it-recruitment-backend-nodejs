@@ -13,8 +13,6 @@
 git clone https://github.com/nicoleOpazo/RecruitmentPlatform3IT
 ```
 
-**Inicia el Back-End Spring Boot:**
-
 - Ejecutar script `script-recruitmentdb.sql`
 - Configura tus datos de conexión en el archivo `database.js`
 - Instalar dependencias `npm install`

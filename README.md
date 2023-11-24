@@ -21,6 +21,14 @@ git clone https://github.com/nicoleOpazo/RecruitmentPlatform3IT
 
 ## Endpoints:
 
+### (nuevo) Obtener listado de Clientes (GET)
+- URL: http://localhost:5000/clientes
+- Método: GET
+
+### (nuevo) Obtener Cliente por ID (GET)
+- URL: http://localhost:5000/clientes/{id}
+- Método: GET
+
 ### Crear Postulante (POST)
 - URL: http://localhost:5000/postulantes
 - Método: POST

@@ -9,7 +9,8 @@ module.exports = (req, res) => {
     if (pathname === '/postulantes') {
         if (req.method === 'GET') {
             postulanteController.getAll(req, res);
-        } else if (req.method === 'POST') {
+        } 
+        else if (req.method === 'POST') {
             const id = pathname.split('/')[2];
             req.params = { id };
             let body = '';
@@ -24,15 +25,18 @@ module.exports = (req, res) => {
             });
 
             
-        } else {
+        } 
+        else {
             res.writeHead(404, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
+            res.end(JSON.stringify({ message: 'Ruta no encontrada (en /postulante)' }));
         }
-    } else if (pathname.startsWith('/postulantes/') && req.method === 'GET') {
+    } 
+    else if (pathname.startsWith('/postulantes/') && req.method === 'GET') {
         const id = pathname.split('/')[2];
         req.params = { id };
         postulanteController.getById(req, res);
-    } else if (pathname.startsWith('/postulantes/') && req.method === 'PUT') {
+    } 
+    else if (pathname.startsWith('/postulantes/') && req.method === 'PUT') {
         const id = pathname.split('/')[2];
         req.params = { id };
         let body = '';
@@ -45,11 +49,13 @@ module.exports = (req, res) => {
             req.body = JSON.parse(body);
             postulanteController.update(req, res);
         });
-    } else if (pathname.startsWith('/postulantes/') && req.method === 'DELETE') {
+    } 
+    else if (pathname.startsWith('/postulantes/') && req.method === 'DELETE') {
         const id = pathname.split('/')[2];
         req.params = { id };
         postulanteController.delete(req, res);
-    } else {
+    } 
+    else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
     }

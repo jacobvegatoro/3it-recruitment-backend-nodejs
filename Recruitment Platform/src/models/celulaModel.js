@@ -10,7 +10,7 @@ class Celula {
     }
 
     /*Cliente al que está asociada la célula*/
-    static getCelulaWithCliente(id, callback) {
+    /*static getCelulaWithCliente(id, callback) {
         const query = `
             SELECT celula.*, cliente.*
             FROM celula
@@ -18,7 +18,7 @@ class Celula {
             WHERE celula.id = ?;
         `;
         db.query(query, [id], callback);
-    }
+    }*/
 }
 
 module.exports = Celula;

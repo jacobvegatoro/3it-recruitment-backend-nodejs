@@ -2,6 +2,8 @@ const http = require('http');
 const postulanteRoutes = require('./routes/postulanteRoutes');
 const clienteRoutes = require('./routes/clienteRoutes');
 const celulaRoutes = require('./routes/celulaRoutes');
+const rolRoutes = require('./routes/rolRoutes');
+
 const PORT = process.env.PORT || 5000;
 
 const server = http.createServer((req, res) => {
@@ -15,7 +17,10 @@ const server = http.createServer((req, res) => {
     } 
     else if (parsedUrl.pathname.startsWith('/celulas')) {
         celulaRoutes(req, res);
-    } 
+    }
+    else if (parsedUrl.pathname.startsWith('/roles')) {
+        rolRoutes(req, res);
+    }
     else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Ruta no encontrada' }));

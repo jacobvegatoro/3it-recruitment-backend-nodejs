@@ -32,9 +32,9 @@ module.exports = {
                 res.end(JSON.stringify(result));
             }
         })
-    },
+    }
 
-    getCelulaWithCliente: (req, res) => {
+    /*getCelulaWithCliente: (req, res) => {
         const id = req.params.id;
         Celula.getCelulaWithCliente(id, (err, result) => {
             if (err) {
@@ -47,5 +47,5 @@ module.exports = {
                 res.end(JSON.stringify(result));
             }
         });
-    }
+    }*/
 }

@@ -41,6 +41,36 @@ VALUES
     ('celula 2', 1),
     ('celula 3', 2);
 
+/* TABLA ROL */    
+CREATE TABLE rol (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    detalle TEXT
+);
+INSERT INTO rol (detalle)
+VALUES
+	('El rol para este proceso es XYZ'),
+    ('El rol para este proceso es ABC'),
+    ('El rol para este proceso es 123');
+
+/* TABLA PROCESO */
+CREATE TABLE proceso (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fecha_ingreso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    idPostulante INT,
+    idRol INT,
+    idCelula INT,
+    CONSTRAINT fk_postulante_id FOREIGN KEY (idPostulante) REFERENCES postulante(id),
+    CONSTRAINT fk_rol_id FOREIGN KEY (idRol) REFERENCES rol(id),
+    CONSTRAINT fk_celula_id FOREIGN KEY (idCelula) REFERENCES celula(id)
+);
+INSERT INTO proceso (idPostulante, idRol, idCelula)
+VALUES
+    (1, 1, 1),
+    (2, 2, 2),
+    (3, 3, 3);
+    
+
+
 
 
 
@@ -51,15 +81,30 @@ VALUES
 SELECT * FROM postulante;
 SELECT * FROM cliente;
 SELECT * FROM celula;
+SELECT * FROM rol;
+SELECT * FROM proceso;
 
 /*Todas las células que tiene un cliente en específico (query del lado del cliente)*/
-SELECT * FROM celula WHERE idCliente = 1; 
+SELECT * FROM celula WHERE idCliente = 1;
+
+/**/
+SELECT celula.*, cliente.*
+FROM cliente
+JOIN celula ON cliente.id = celula.idCliente
+WHERE idCliente = 1;
+
+/**/
+SELECT cliente.nombre AS nombre_cliente, celula.nombre AS nombre_celula
+FROM cliente
+JOIN celula ON cliente.id = celula.idCliente
+WHERE cliente.nombre = 'Banco de Chile';
+
 
 /*Cliente al que está asociada la célula (query del lado de la célula)*/
 SELECT celula.*, cliente.*
 FROM celula
 JOIN cliente ON celula.idCliente = cliente.id
-WHERE celula.id = 3;
+WHERE celula.id = 1;
 
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY 'nadmin';
@@ -99,3 +144,5 @@ VALUES (
 drop table postulante;
 drop table cliente;
 drop table celula;
+drop table rol;
+drop table proceso;

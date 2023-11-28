@@ -35,8 +35,8 @@ module.exports = {
     },
 
     getCelulas: (req, res) => {
-        const idCliente = req.params.idCliente;
-        Cliente.getCelulasByClienteId(idCliente, (err, result) => {
+        const id = req.params.id;
+        Cliente.getCelulasByClienteId(id, (err, result) => {
             if (err) {
                 console.error(err);
                 res.writeHead(500, { 'Content-Type': 'application/json' });

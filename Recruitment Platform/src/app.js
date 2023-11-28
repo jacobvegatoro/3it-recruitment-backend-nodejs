@@ -9,11 +9,14 @@ const server = http.createServer((req, res) => {
     
     if (parsedUrl.pathname.startsWith('/postulantes')) {
         postulanteRoutes(req, res);
-    } else if (parsedUrl.pathname.startsWith('/clientes')) {
+    } 
+    else if (parsedUrl.pathname.startsWith('/clientes')) {
         clienteRoutes(req, res);
-    } else if (parsedUrl.pathname.startsWith('/celulas')) {
+    } 
+    else if (parsedUrl.pathname.startsWith('/celulas')) {
         celulaRoutes(req, res);
-    } else {
+    } 
+    else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
     }

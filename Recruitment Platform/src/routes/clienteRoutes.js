@@ -8,17 +8,20 @@ module.exports = (req, res) => {
     if (pathname === '/clientes') {
         if (req.method === 'GET') {
             clienteController.getAll(req, res);
-        } else {
+        } 
+        else {
             res.writeHead(404, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Ruta no encontrada (en /cliente)' }));
         }
-    } else if (pathname.startsWith('/clientes/') && req.method === 'GET') {
+    } 
+    else if (pathname.startsWith('/clientes/') && req.method === 'GET' && !pathname.endsWith('/celulas')) {
         const id = pathname.split('/')[2];
         req.params = { id };
         clienteController.getById(req, res);
-    } else if (pathname.startsWith('/clientes/') && req.method === 'GET' && pathname.endsWith('/celulas')) {
-        const idCliente = pathname.split('/')[2];
-        req.params = { idCliente };
+    } 
+    else if (pathname.startsWith('/clientes/') && req.method === 'GET' && pathname.endsWith('/celulas')) {
+        const id = pathname.split('/')[2];
+        req.params = { id };
         clienteController.getCelulas(req, res);
     }
     else {

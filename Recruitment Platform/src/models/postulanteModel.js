@@ -20,6 +20,17 @@ class Postulante {
     static delete(id, callback) {
         db.query('DELETE FROM postulante WHERE id = ?', [id], callback);
     }
+
+    static searchByKeyword(keyword, callback) {
+        const query = `
+            SELECT *
+            FROM postulante
+            WHERE nombres LIKE ? OR apellidos LIKE ?;
+        `;
+        const keywordPattern = `%${keyword}%`;
+
+        db.query(query, [keywordPattern, keywordPattern], callback);
+    }
 }
 
 module.exports = Postulante;

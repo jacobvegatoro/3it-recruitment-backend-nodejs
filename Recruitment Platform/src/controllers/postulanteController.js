@@ -8,7 +8,7 @@ module.exports = {
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*','Access-Control-Allow-Methods': '*',});
+                res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': '*', });
                 res.end(JSON.stringify(result));
             }
         });
@@ -25,7 +25,7 @@ module.exports = {
                 res.writeHead(404, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Postulante no encontrado' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*','Access-Control-Allow-Methods': '*',});
+                res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': '*', });
                 res.end(JSON.stringify(result));
             }
         });
@@ -39,7 +39,7 @@ module.exports = {
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor (create)' }));
             } else {
-                res.writeHead(201, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*','Access-Control-Allow-Methods': '*',});
+                res.writeHead(201, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': '*', });
                 res.end(JSON.stringify({ message: 'Postulante creado', id: result.insertId }));
             }
         });
@@ -54,7 +54,7 @@ module.exports = {
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor (getAll postulante)' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*','Access-Control-Allow-Methods': '*',});
+                res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': '*', });
                 res.end(JSON.stringify({ message: 'Postulante actualizado' }));
             }
         });
@@ -68,10 +68,20 @@ module.exports = {
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor (getById postulante)' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*','Access-Control-Allow-Methods': '*',});
+                res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': '*', });
                 res.end(JSON.stringify({ message: 'Postulante eliminado' }));
             }
         });
+    },
+
+    searchByKeyword: (keyword, callback) => {
+        Postulante.searchByKeyword(keyword, (err, result) => {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
     }
-    
+
 };

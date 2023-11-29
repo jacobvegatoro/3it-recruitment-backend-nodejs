@@ -67,8 +67,9 @@ INSERT INTO proceso (idPostulante, idRol, idCelula)
 VALUES
     (1, 1, 1),
     (2, 2, 2),
-    (3, 3, 3);
-    
+    (3, 3, 3),
+    (3, 3, 1);
+
 
 
 
@@ -105,6 +106,10 @@ SELECT celula.*, cliente.*
 FROM celula
 JOIN cliente ON celula.idCliente = cliente.id
 WHERE celula.id = 1;
+
+/* Búsqueda de postulante */
+SELECT * FROM postulante
+WHERE nombres LIKE 'Juan' OR apellidos LIKE 'Juan';
 
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY 'nadmin';

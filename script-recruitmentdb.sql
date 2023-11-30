@@ -13,7 +13,17 @@ INSERT INTO postulante (nombres, apellidos, ciudad, enlaceBizneo)
 VALUES
     ('Juan', 'Pérez', 'Ciudad1', 'https://bizneo.com/juanperez'),
     ('María', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
-    ('Pedro', 'Rodríguez', 'Ciudad3', 'https://bizneo.com/pedrorodriguez');
+    ('Pedro', 'Rodríguez', 'Ciudad3', 'https://bizneo.com/pedrorodriguez'),
+    ('Ejemplo4', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
+    ('Ejemplo5', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
+    ('Ejemplo6', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
+    ('Ejemplo7', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
+    ('Ejemplo8', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
+    ('Ejemplo9', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
+    ('Ejemplo10', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
+    ('Ejemplo11', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
+    ('Ejemplo12', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez');
+    
 
 
 /* TABLA DE CLIENTES */

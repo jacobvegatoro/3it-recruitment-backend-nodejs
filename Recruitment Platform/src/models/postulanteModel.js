@@ -31,6 +31,12 @@ class Postulante {
 
         db.query(query, [keywordPattern, keywordPattern], callback);
     }
+
+    static getAllPaginated(page, limit, callback) {
+        const offset = (page - 1) * limit;
+        const query = 'SELECT * FROM postulante LIMIT ?, ?';
+        db.query(query, [offset, limit], callback);
+    }
 }
 
 module.exports = Postulante;

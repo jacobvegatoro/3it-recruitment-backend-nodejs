@@ -6,11 +6,11 @@ module.exports = (req, res) => {
     const { pathname, method } = parsedUrl;
 
     if (pathname === '/postulantes') {
-        //GET http://localhost:5000/postulantes
+        //GET TODOS http://localhost:5000/postulantes
         if (req.method === 'GET') {
             postulanteController.getAll(req, res);
         }
-        //POST http://localhost:5000/postulantes
+        //POST CREAR http://localhost:5000/postulantes
         else if (req.method === 'POST') {
             const id = pathname.split('/')[2];
             req.params = { id };
@@ -32,13 +32,13 @@ module.exports = (req, res) => {
             res.end(JSON.stringify({ message: 'Ruta no encontrada (en /postulante)' }));
         }
     }
-    //GET http://localhost:5000/postulantes/1
-    else if (pathname.startsWith('/postulantes/') && req.method === 'GET' && !pathname.endsWith('/buscar')) {
+    //GET X ID http://localhost:5000/postulantes/1
+    else if (pathname.startsWith('/postulantes/') && req.method === 'GET' && !pathname.endsWith('/buscar') && !pathname.endsWith('/paginacion')) {
         const id = pathname.split('/')[2];
         req.params = { id };
         postulanteController.getById(req, res);
     }
-    //PUT http://localhost:5000/postulantes/4
+    //PUT EDITAR http://localhost:5000/postulantes/4
     else if (pathname.startsWith('/postulantes/') && req.method === 'PUT') {
         const id = pathname.split('/')[2];
         req.params = { id };
@@ -53,13 +53,13 @@ module.exports = (req, res) => {
             postulanteController.update(req, res);
         });
     }
-    //DELETE http://localhost:5000/postulantes/4
+    //DELETE BORRAR http://localhost:5000/postulantes/4
     else if (pathname.startsWith('/postulantes/') && req.method === 'DELETE') {
         const id = pathname.split('/')[2];
         req.params = { id };
         postulanteController.delete(req, res);
     }
-    //GET http://localhost:5000/postulantes/buscar?keyword=juan
+    //GET BUSCAR PALABRA http://localhost:5000/postulantes/buscar?keyword=juan
     else if (pathname === '/postulantes/buscar' && req.method === 'GET') {
         const queryParameters = parsedUrl.query;
         const keyword = queryParameters.keyword;
@@ -80,6 +80,10 @@ module.exports = (req, res) => {
                 res.end(JSON.stringify(result));
             }
         });
+    }
+    //GET PAGINACIÓN http://localhost:5000/postulantes/paginacion
+    else if (pathname.startsWith('/postulantes') && req.method === 'GET' && pathname.endsWith('/paginacion')) {
+        postulanteController.getAllPaginated(req, res);
     }
     //MANEJO DE ERRORES
     else {

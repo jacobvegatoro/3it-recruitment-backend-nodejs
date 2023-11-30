@@ -81,6 +81,35 @@ VALUES
     (3, 3, 1);
 
 
+/* TABLA ENTREVISTA */
+CREATE TABLE entrevista (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fecha_entrevista TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    perfilBuscado TEXT,
+    comentariosPrueba TEXT,
+    comentariosGenerales TEXT,
+    recomendaciones TEXT,
+    descripcionPersonal TEXT,
+    preguntasCandidato TEXT,
+    idProceso INT,
+    CONSTRAINT fk_proceso_id FOREIGN KEY (idProceso) REFERENCES proceso(id)
+);
+INSERT INTO entrevista (
+    fecha_entrevista,
+    perfilBuscado,
+    comentariosPrueba,
+    comentariosGenerales,
+    recomendaciones,
+    descripcionPersonal,
+    preguntasCandidato,
+    idProceso
+) VALUES
+	('2023-11-30 10:00:00', 'Perfil 1', 
+    'Comentario prueba 1', 'Comentario general 1', 'Recomendación 1', 'Descripción personal 1', 'Preguntas candidato 1', 1),
+	('2023-11-30 11:30:00', 'Perfil 2', 
+    'Comentario prueba 2', 'Comentario general 2', 'Recomendación 2', 'Descripción personal 2', 'Preguntas candidato 2', 2),
+	('2023-11-30 14:45:00', 'Perfil 3', 
+    'Comentario prueba 3', 'Comentario general 3', 'Recomendación 3', 'Descripción personal 3', 'Preguntas candidato 3', 1);
 
 
 
@@ -94,6 +123,7 @@ SELECT * FROM cliente;
 SELECT * FROM celula;
 SELECT * FROM rol;
 SELECT * FROM proceso;
+SELECT * FROM entrevista;
 
 /*Todas las células que tiene un cliente en específico (query del lado del cliente)*/
 SELECT * FROM celula WHERE idCliente = 1;
@@ -125,36 +155,7 @@ WHERE nombres LIKE 'Juan' OR apellidos LIKE 'Juan';
 ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY 'nadmin';
 
 
-/*CREATE TABLE postulantes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    fecha DATETIME,
-    perfilBuscado VARCHAR(100) NOT NULL,
-    comentariosPrueba VARCHAR(300),
-    comentariosGenerales VARCHAR(300),
-    recomendaciones VARCHAR(300),
-    descripcionPersonal VARCHAR(300),
-    preguntasCandidato VARCHAR(300)
-);
-SELECT * FROM postulantes;
 
-INSERT INTO postulantes (
-fecha,
-perfilBuscado,
-comentariosPrueba,
-comentariosGenerales,
-recomendaciones,
-descripcionPersonal,
-preguntasCandidato)
-VALUES (
-'2023-01-01', 
-'Desarrollador Full Stack', 
-'Buen desempeño técnico', 
-'Excelente comunicación', 
-'Sí', 
-'Motivado y enfocado', 
-'¿Cómo manejas situaciones de presión?'),
-  ('2023-02-01', 'Ingeniero de Software', 'Prueba técnica pendiente', 'Buena experiencia en proyectos anteriores', 'No', 'Apasionado por la tecnología', '¿Cuál es tu mayor logro profesional?');
-*/
 
 drop table postulante;
 drop table cliente;

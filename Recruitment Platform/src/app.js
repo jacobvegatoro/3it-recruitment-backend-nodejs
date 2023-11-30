@@ -5,6 +5,7 @@ const clienteRoutes = require('./routes/clienteRoutes');
 const celulaRoutes = require('./routes/celulaRoutes');
 const rolRoutes = require('./routes/rolRoutes');
 const procesoRoutes = require('./routes/procesoRoutes');
+const entrevistaRoutes = require('./routes/entrevistaRoutes');
 
 const PORT = process.env.PORT || 5000;
 
@@ -33,6 +34,9 @@ const router = (req, res) => {
     } 
     else if (pathname.startsWith('/procesos')){
         procesoRoutes(req, res);
+    }
+    else if (pathname.startsWith('/entrevistas')){
+        entrevistaRoutes(req, res);
     }
     else {
         res.writeHead(404, { 'Content-Type': 'application/json' });

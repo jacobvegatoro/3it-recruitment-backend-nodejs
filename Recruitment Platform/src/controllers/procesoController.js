@@ -5,10 +5,8 @@ module.exports = {
         Proceso.getAll((err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json'});
                 res.end(JSON.stringify(result));
             }
         });
@@ -19,13 +17,10 @@ module.exports = {
         Proceso.getById(id, (err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else if (!result || result.length === 0) {
-                res.writeHead(404, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Proceso no encontrado' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json'});
                 res.end(JSON.stringify(result));
             }
         });
@@ -36,10 +31,8 @@ module.exports = {
         Proceso.create(newProceso, (err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'Error interno del servidor (create)' }));
+                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(201, { 'Content-Type': 'application/json'});
                 res.end(JSON.stringify({ message: 'Proceso creado', id: result.insertId }));
             }
         });
@@ -51,10 +44,8 @@ module.exports = {
         Proceso.update(id, updatedProceso, (err) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json'});
                 res.end(JSON.stringify({ message: 'Proceso actualizado' }));
             }
         });
@@ -65,10 +56,8 @@ module.exports = {
         Proceso.delete(id, (err) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json'});
                 res.end(JSON.stringify({ message: 'Proceso eliminado' }));
             }
         });

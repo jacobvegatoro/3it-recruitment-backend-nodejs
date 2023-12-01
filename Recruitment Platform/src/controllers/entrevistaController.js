@@ -7,10 +7,8 @@ module.exports = {
         Entrevista.getAll((err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(result));
             }
         });
@@ -21,13 +19,10 @@ module.exports = {
         Entrevista.getById(id, (err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else if (!result || result.length === 0) {
-                res.writeHead(404, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Entrevista no encontrada' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(result));
             }
         });
@@ -38,10 +33,8 @@ module.exports = {
         Entrevista.create(newEntrevista, (err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(201, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Entrevista creada', id: result.insertId }));
             }
         });
@@ -53,10 +46,8 @@ module.exports = {
         Entrevista.update(id, updatedEntrevista, (err) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Entrevista actualizada' }));
             }
         });
@@ -67,10 +58,8 @@ module.exports = {
         Entrevista.delete(id, (err) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Entrevista eliminada' }));
             }
         });
@@ -83,10 +72,8 @@ module.exports = {
         Entrevista.getAllPaginated(page, PAGE_SIZE, (err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(result));
             }
         });

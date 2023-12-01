@@ -28,7 +28,6 @@ module.exports = (req, res) => {
 
         }
         else {
-            res.writeHead(404, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Ruta no encontrada (en /postulante)' }));
         }
     }
@@ -65,7 +64,6 @@ module.exports = (req, res) => {
         const keyword = queryParameters.keyword;
 
         if (!keyword) {
-            res.writeHead(400, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Palabra clave no proporcionada' }));
             return;
         }
@@ -73,10 +71,8 @@ module.exports = (req, res) => {
         postulanteController.searchByKeyword(keyword, (err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(result));
             }
         });
@@ -87,7 +83,6 @@ module.exports = (req, res) => {
     }
     //MANEJO DE ERRORES
     else {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
     }
 };

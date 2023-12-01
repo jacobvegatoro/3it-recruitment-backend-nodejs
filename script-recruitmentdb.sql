@@ -1,6 +1,7 @@
 CREATE DATABASE recruitment_db;
 USE recruitment_db;
 
+
 /* TABLA DE POSTULANTES */
 CREATE TABLE postulante (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,8 +23,7 @@ VALUES
     ('Ejemplo9', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
     ('Ejemplo10', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
     ('Ejemplo11', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez'),
-    ('Ejemplo12', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez');
-    
+    ('Ejemplo12', 'Gómez', 'Ciudad2', 'https://bizneo.com/mariagomez');    
 
 
 /* TABLA DE CLIENTES */
@@ -51,6 +51,7 @@ VALUES
     ('celula 2', 1),
     ('celula 3', 2);
 
+
 /* TABLA ROL */    
 CREATE TABLE rol (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -61,6 +62,7 @@ VALUES
 	('El rol para este proceso es XYZ'),
     ('El rol para este proceso es ABC'),
     ('El rol para este proceso es 123');
+
 
 /* TABLA PROCESO */
 CREATE TABLE proceso (
@@ -112,8 +114,22 @@ INSERT INTO entrevista (
     'Comentario prueba 3', 'Comentario general 3', 'Recomendación 3', 'Descripción personal 3', 'Preguntas candidato 3', 1);
 
 
+/* TABLA PREGUNTA */
+CREATE TABLE pregunta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    detalle TEXT,
+    activo BOOLEAN,
+    idRol INT,
+    CONSTRAINT fk_pregunta_rol_id FOREIGN KEY (idRol) REFERENCES rol(id)
+);
+INSERT INTO pregunta (detalle, activo, idRol)
+VALUES
+    ('Pregunta 1?', true, 1),
+    ('Pregunta 2?', false, 2),
+    ('Pregunta 3?', true, 3);
 
 
+drop table pregunta;
 
 
 
@@ -124,6 +140,7 @@ SELECT * FROM celula;
 SELECT * FROM rol;
 SELECT * FROM proceso;
 SELECT * FROM entrevista;
+SELECT * FROM pregunta;
 
 /*Todas las células que tiene un cliente en específico (query del lado del cliente)*/
 SELECT * FROM celula WHERE idCliente = 1;

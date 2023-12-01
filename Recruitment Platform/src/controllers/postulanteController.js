@@ -7,10 +7,8 @@ module.exports = {
         Postulante.getAll((err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(result));
             }
         });
@@ -21,13 +19,10 @@ module.exports = {
         Postulante.getById(id, (err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else if (!result || result.length === 0) {
-                res.writeHead(404, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Postulante no encontrado' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(result));
             }
         });
@@ -38,10 +33,8 @@ module.exports = {
         Postulante.create(newPostulante, (err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'Error interno del servidor (create)' }));
+                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(201, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Postulante creado', id: result.insertId }));
             }
         });
@@ -53,10 +46,8 @@ module.exports = {
         Postulante.update(id, updatedPostulante, (err) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'Error interno del servidor (getAll postulante)' }));
+                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Postulante actualizado' }));
             }
         });
@@ -67,10 +58,8 @@ module.exports = {
         Postulante.delete(id, (err) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'Error interno del servidor (getById postulante)' }));
+                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Postulante eliminado' }));
             }
         });
@@ -93,10 +82,8 @@ module.exports = {
         Postulante.getAllPaginated(page, PAGE_SIZE, (err, result) => {
             if (err) {
                 console.error(err);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(result));
             }
         });

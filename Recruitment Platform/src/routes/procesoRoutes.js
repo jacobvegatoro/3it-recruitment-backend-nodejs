@@ -28,7 +28,6 @@ module.exports = (req, res) => {
 
         }
         else {
-            res.writeHead(404, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
         }
     }
@@ -61,7 +60,6 @@ module.exports = (req, res) => {
     }
     //MANEJO DE ERRORES
     else {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
     }
 };

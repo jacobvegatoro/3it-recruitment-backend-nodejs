@@ -12,10 +12,10 @@ class Cliente {
     /*Todas las células que tiene un cliente en específico*/
     static getCelulasByClienteId(id, callback) {
         const query = `
-            SELECT cliente.nombre AS nombre_cliente, celula.nombre AS nombre_celula
+            SELECT celula.id AS id, celula.nombre AS nombre
             FROM cliente
             JOIN celula ON cliente.id = celula.idCliente
-            WHERE idCliente = 1;
+            WHERE idCliente = ?;
             `;
         db.query(query, [id], callback);
     }

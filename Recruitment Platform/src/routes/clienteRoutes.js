@@ -10,8 +10,7 @@ module.exports = (req, res) => {
             clienteController.getAll(req, res);
         } 
         else {
-            res.writeHead(404, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Ruta no encontrada (en /cliente)' }));
+            res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
         }
     } 
     else if (pathname.startsWith('/clientes/') && req.method === 'GET' && !pathname.endsWith('/celulas')) {
@@ -25,7 +24,6 @@ module.exports = (req, res) => {
         clienteController.getCelulas(req, res);
     }
     else {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
     }
 };

@@ -64,45 +64,28 @@ module.exports = {
     },
 
     createMultiple: (req, res) => {
-        const nuevasPreguntas = req.body;
-
-        const contador = 0;
-
-        if(contador == nuevasPreguntas.length){
-            res.end(JSON.stringify({ message: 'Preguntas guardadas correctamente' }));
-        }
-        else{
-            res.end(JSON.stringify({ message: 'Preguntas no guardadas' }));
-        }
-
-        // Crear un array para almacenar los ID de las nuevas preguntas
-        //const nuevosIds = [];
-
-        // Iterar sobre cada nueva pregunta y realizar la inserción
-        /*nuevasPreguntas.forEach((nuevaPregunta, index) => {
-            Pregunta.create(nuevaPregunta, (err, result) => {
-                if (err) {
-                    console.error(err);
-                    res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-                } else {
-                    // Almacenar el ID de la nueva pregunta
-                    nuevosIds.push(result.insertId);
-
-                    // Verificar si hemos terminado de procesar todas las preguntas
-                    if (index === nuevasPreguntas.length - 1) {
-                        // Obtener todas las preguntas después de la inserción
-                        Pregunta.getAll((err, preguntasActualizadas) => {
-                            if (err) {
-                                console.error(err);
-                                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-                            } else {
-                                res.end(JSON.stringify(preguntasActualizadas));
-                            }
-                        });
+        let body = '';
+    
+        req.on('data', (chunk) => {
+            body += chunk;
+        });
+    
+        req.on('end', () => {
+            const newPreguntas = JSON.parse(body);
+    
+            newPreguntas.forEach((pregunta) => {
+                Pregunta.create(pregunta, (err, result) => {
+                    if (err) {
+                        console.error(err);
+                        res.end(JSON.stringify({ message: 'Error interno del servidor' }));
+                    } else {
+                        console.log(`Pregunta creada con ID: ${result.insertId}`);
                     }
-                }
+                });
             });
-        });*/
+    
+            res.end(JSON.stringify({ message: 'Preguntas creadas exitosamente' }));
+        });
     }
 
 };

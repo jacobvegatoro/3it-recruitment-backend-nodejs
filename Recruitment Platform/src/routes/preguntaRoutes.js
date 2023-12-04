@@ -21,21 +21,8 @@ module.exports = (req, res) => {
     else if (req.method === 'POST') {
         // POST CREAR Multiples http://localhost:5000/preguntas/multiples
         if (pathname.startsWith('/preguntas/') && pathname.endsWith('/multiples')) {
-            let body = '';
-
-            req.on('data', (chunk) => {
-                body += chunk;
-            });
-
-            req.on('end', () => {
-                try {
-                    req.body = JSON.parse(body);
-                    preguntaController.create(req, res);
-                } catch (error) {
-                    console.error('Error al analizar el cuerpo de la solicitud:', error);
-                    res.end(JSON.stringify({ message: 'Error en el formato de los datos enviados' }));
-                }
-            });
+            preguntaController.createMultiple(req, res);
+            
         }
         //POST CREAR http://localhost:5000/preguntas
         else {

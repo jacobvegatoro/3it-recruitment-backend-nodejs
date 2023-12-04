@@ -129,7 +129,7 @@ VALUES
     ('Pregunta 3?', true, 3);
 
 
-drop table pregunta;
+
 
 
 
@@ -179,3 +179,5 @@ drop table cliente;
 drop table celula;
 drop table rol;
 drop table proceso;
+drop table entrevista;
+drop table pregunta;

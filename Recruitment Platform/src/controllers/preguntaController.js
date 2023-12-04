@@ -66,11 +66,20 @@ module.exports = {
     createMultiple: (req, res) => {
         const nuevasPreguntas = req.body;
 
+        const contador = 0;
+
+        if(contador == nuevasPreguntas.length){
+            res.end(JSON.stringify({ message: 'Preguntas guardadas correctamente' }));
+        }
+        else{
+            res.end(JSON.stringify({ message: 'Preguntas no guardadas' }));
+        }
+
         // Crear un array para almacenar los ID de las nuevas preguntas
-        const nuevosIds = [];
+        //const nuevosIds = [];
 
         // Iterar sobre cada nueva pregunta y realizar la inserción
-        nuevasPreguntas.forEach((nuevaPregunta, index) => {
+        /*nuevasPreguntas.forEach((nuevaPregunta, index) => {
             Pregunta.create(nuevaPregunta, (err, result) => {
                 if (err) {
                     console.error(err);
@@ -93,7 +102,7 @@ module.exports = {
                     }
                 }
             });
-        });
+        });*/
     }
 
 };

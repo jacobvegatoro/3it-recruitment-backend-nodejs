@@ -5,40 +5,37 @@ module.exports = (req, res) => {
     const parsedUrl = url.parse(req.url, true);
     const { pathname, method } = parsedUrl;
 
-    if (pathname === '/entrevistas') {
-        //GET TODOS http://localhost:5000/entrevistas
-        if (req.method === 'GET') {
-            entrevistaController.getAll(req, res);
-        }
-        //POST CREAR http://localhost:5000/entrevistas
-        else if (req.method === 'POST') {
+    if (req.method === 'GET') {
+        //GET X ID http://localhost:5000/entrevistas/1
+        if (pathname.startsWith('/entrevistas/') && !pathname.endsWith('/paginacion')) {
             const id = pathname.split('/')[2];
             req.params = { id };
-            let body = '';
-
-            req.on('data', (chunk) => {
-                body += chunk;
-            });
-
-            req.on('end', () => {
-                req.body = JSON.parse(body);
-                entrevistaController.create(req, res);
-            });
-
-
+            entrevistaController.getById(req, res);
         }
+        //GET PAGINACIÓN http://localhost:5000/entrevistas/paginacion
+        else if (pathname.startsWith('/entrevistas') && pathname.endsWith('/paginacion')) {
+            entrevistaController.getAllPaginated(req, res);
+        }
+        //GET TODOS http://localhost:5000/entrevistas
         else {
-            res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
+            entrevistaController.getAll(req, res);
         }
     }
-    //GET X ID http://localhost:5000/entrevistas/1
-    else if (pathname.startsWith('/entrevistas/') && req.method === 'GET' && !pathname.endsWith('/buscar') && !pathname.endsWith('/paginacion')) {
-        const id = pathname.split('/')[2];
-        req.params = { id };
-        entrevistaController.getById(req, res);
+    //POST CREAR http://localhost:5000/entrevistas
+    else if (req.method === 'POST') {
+        let body = '';
+
+        req.on('data', (chunk) => {
+            body += chunk;
+        });
+
+        req.on('end', () => {
+            req.body = JSON.parse(body);
+            entrevistaController.create(req, res);
+        });
     }
     //PUT EDITAR http://localhost:5000/entrevistas/4
-    else if (pathname.startsWith('/entrevistas/') && req.method === 'PUT') {
+    else if (req.method === 'PUT' && pathname.startsWith('/entrevistas/')) {
         const id = pathname.split('/')[2];
         req.params = { id };
         let body = '';
@@ -53,17 +50,13 @@ module.exports = (req, res) => {
         });
     }
     //DELETE BORRAR http://localhost:5000/entrevistas/4
-    else if (pathname.startsWith('/entrevistas/') && req.method === 'DELETE') {
+    else if (req.method === 'DELETE' && pathname.startsWith('/entrevistas/')) {
         const id = pathname.split('/')[2];
         req.params = { id };
         entrevistaController.delete(req, res);
     }
-    //GET PAGINACIÓN http://localhost:5000/entrevistas/paginacion
-    else if (pathname.startsWith('/entrevistas') && req.method === 'GET' && pathname.endsWith('/paginacion')) {
-        entrevistaController.getAllPaginated(req, res);
-    }
-    //MANEJO DE ERRORES
     else {
         res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
     }
+
 };

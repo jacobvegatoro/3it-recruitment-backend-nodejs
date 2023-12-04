@@ -21,48 +21,42 @@ git clone https://github.com/nicoleOpazo/RecruitmentPlatform3IT
 
 ## Endpoints:
 
-### (nuevo) Obtener listado de Clientes (GET)
-- URL: http://localhost:5000/clientes
-- Método: GET
+### Postulante
+CRUD completo (obtener listado, crear, editar, eliminar) más:
 
-### (nuevo) Obtener Cliente por ID (GET)
-- URL: http://localhost:5000/clientes/{id}
-- Método: GET
+- Obtener postulante por ID
+- Obtener listado de postulantes con paginación
+- Obtener postulante por búsqueda de palabra clave
 
-### Crear Postulante (POST)
-- URL: http://localhost:5000/postulantes
-- Método: POST
-- Ejemplo de JSON de Solicitud:
-```json
-{
-  "nombres": "Nombre Postulante",
-  "apellidos": "Apellido Postulante",
-  "ciudad": "Ciudad Ejemplo",
-  "enlaceBizneo": "http://bizneo.com"
-}
-```
+### Cliente 
 
-### Obtener listado de Postulantes (GET)
-- URL: http://localhost:5000/postulantes
-- Método: GET
+- Obtener cliente por ID
+- Obtener células asociadas a cliente específico
+- Obtener listado de clientes
 
-### Obtener Postulante por ID (GET)
-- URL: http://localhost:5000/postulantes/{id}
-- Método: GET
+### Célula 
 
-### Editar Postulante (PUT)
-- URL: http://localhost:5000/postulantes/{id}
-- Método: PUT
-- Ejemplo de JSON de Solicitud:
-```json
-{
-    "nombres": "EDIT Nombre Postulante",
-    "apellidos": "Apellido Postulante",
-    "ciudad": "Ciudad Ejemplo",
-    "enlaceBizneo": "http://bizneo.com"
-}
-```
+- Obtener célula por ID
+- Obtener listado de células
 
-### Eliminar Postulante (DELETE)
-- URL: http://localhost:5000/postulantes/{id}
-- Método: DELETE
+### Rol 
+
+- Obtener listado de roles
+- Crear nuevo rol
+
+### Proceso
+CRUD completo (obtener listado, crear, editar, eliminar) más:
+
+- Obtener proceso por ID
+### Entrevista 
+CRUD completo (obtener listado, crear, editar, eliminar) más:
+
+- Obtener entrevista por ID
+- Obtener listado de entrevistas con paginación
+
+### Pregunta
+CRUD completo (obtener listado, crear, editar, eliminar) más:
+
+- Obtener pregunta por ID
+- (en proceso) Crear múltiples preguntas
+

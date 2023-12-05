@@ -129,6 +129,81 @@ VALUES
     ('Pregunta 3?', true, 3);
 
 
+/* TABLA RESPUESTA */
+CREATE TABLE respuesta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    detalle TEXT,
+    puntaje INT,
+    idEntrevista INT,
+    idPregunta INT,
+    CONSTRAINT fk_entrevista_id FOREIGN KEY (idEntrevista) REFERENCES entrevista(id),
+    CONSTRAINT fk_pregunta_respuesta_id FOREIGN KEY (idPregunta) REFERENCES pregunta(id)
+);
+INSERT INTO respuesta (detalle, puntaje, idEntrevista, idPregunta)
+VALUES
+    ('Respuesta 1', 7, 1, 1),
+    ('Respuesta 2', 5, 2, 2),
+    ('Respuesta 3', 6, 3, 3);
+    
+
+/*TABLA ROLES DE USUARIO*/
+CREATE TABLE rolUsuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100)
+);
+INSERT INTO rolUsuario (nombre)
+VALUES
+    ('Rol 1'),
+    ('Rol 2'),
+    ('Rol 3');
+    
+    
+/*TABLA USUARIO*/
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    login TEXT,
+    clave TEXT,
+    correo VARCHAR(100),
+    telefono INT,
+    CONSTRAINT fk_rolUsuario_id FOREIGN KEY (idRolUsuario) REFERENCES rolUsuario(id)
+);
+INSERT INTO usuario (nombre, apellido, login, clave, correo, telefono, idRolUsuario)
+VALUES
+    ('Rol 1'),
+    ('Rol 2'),
+    ('Rol 3');    
+
+
+/*TABLA ROLES DE ESTADO*/
+CREATE TABLE estado (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100)
+);
+INSERT INTO estado (nombre)
+VALUES
+    ('Estado 1'),
+    ('Estado 2'),
+    ('Estado 3');
+    
+    
+/* TABLA ESTADO-PROCESO */
+CREATE TABLE estadoProceso (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    comentario TEXT,
+    -- idProceso, idEstado, idUsuario
+    idEntrevista INT,
+    idPregunta INT,
+    CONSTRAINT fk_entrevista_id FOREIGN KEY (idEntrevista) REFERENCES entrevista(id),
+    CONSTRAINT fk_pregunta_respuesta_id FOREIGN KEY (idPregunta) REFERENCES pregunta(id)
+);
+INSERT INTO respuesta (detalle, puntaje, idEntrevista, idPregunta)
+VALUES
+    ('Respuesta 1', 7, 1, 1),
+    ('Respuesta 2', 5, 2, 2),
+    ('Respuesta 3', 6, 3, 3);    
 
 
 
@@ -141,6 +216,8 @@ SELECT * FROM rol;
 SELECT * FROM proceso;
 SELECT * FROM entrevista;
 SELECT * FROM pregunta;
+SELECT * FROM respuesta;
+SELECT * FROM rolUsuario;
 
 /*Todas las células que tiene un cliente en específico (query del lado del cliente)*/
 SELECT * FROM celula WHERE idCliente = 1;

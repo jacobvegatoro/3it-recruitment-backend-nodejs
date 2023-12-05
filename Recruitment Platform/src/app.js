@@ -7,6 +7,7 @@ const rolRoutes = require('./routes/rolRoutes');
 const procesoRoutes = require('./routes/procesoRoutes');
 const entrevistaRoutes = require('./routes/entrevistaRoutes');
 const preguntaRoutes = require('./routes/preguntaRoutes');
+const respuestaRoutes = require('./routes/respuestaRoutes');
 
 const PORT = process.env.PORT || 5000;
 
@@ -42,6 +43,9 @@ const router = (req, res) => {
     }
     else if (pathname.startsWith('/preguntas')) {
         preguntaRoutes(req, res);
+    }
+    else if (pathname.startsWith('/respuestas')) {
+        respuestaRoutes(req, res);
     }
     else {
         res.end(JSON.stringify({ message: 'Ruta no encontrada' }));

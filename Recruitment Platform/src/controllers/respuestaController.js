@@ -1,8 +1,8 @@
-const Pregunta = require('../models/preguntaModel');
+const Respuesta = require('../models/respuestaModel');
 
 module.exports = {
     getAll: (req, res) => {
-        Pregunta.getAll((err, result) => {
+        Respuesta.getAll((err, result) => {
             if (err) {
                 console.error(err);
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
@@ -14,12 +14,12 @@ module.exports = {
 
     getById: (req, res) => {
         const id = req.params.id;
-        Pregunta.getById(id, (err, result) => {
+        Respuesta.getById(id, (err, result) => {
             if (err) {
                 console.error(err);
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else if (!result || result.length === 0) {
-                res.end(JSON.stringify({ message: 'Pregunta no encontrada' }));
+                res.end(JSON.stringify({ message: 'Respuesta no encontrada' }));
             } else {
                 res.end(JSON.stringify(result));
             }
@@ -27,69 +27,65 @@ module.exports = {
     },
 
     create: (req, res) => {
-        const newPregunta = req.body;
-        Pregunta.create(newPregunta, (err, result) => {
+        const newRespuesta = req.body;
+        Respuesta.create(newRespuesta, (err, result) => {
             if (err) {
                 console.error(err);
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.end(JSON.stringify({ message: 'Pregunta creada', id: result.insertId }));
+                res.end(JSON.stringify({ message: 'Respuesta creada', id: result.insertId }));
             }
         });
     },
 
     update: (req, res) => {
         const id = req.params.id;
-        const updatedPregunta = req.body;
-        Pregunta.update(id, updatedPregunta, (err) => {
+        const updatedRespuesta = req.body;
+        Respuesta.update(id, updatedRespuesta, (err) => {
             if (err) {
                 console.error(err);
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.end(JSON.stringify({ message: 'Pregunta actualizada' }));
+                res.end(JSON.stringify({ message: 'Respuesta actualizada' }));
             }
         });
     },
 
     delete: (req, res) => {
         const id = req.params.id;
-        Pregunta.delete(id, (err) => {
+        Respuesta.delete(id, (err) => {
             if (err) {
                 console.error(err);
                 res.end(JSON.stringify({ message: 'Error interno del servidor' }));
             } else {
-                res.end(JSON.stringify({ message: 'Pregunta eliminada' }));
+                res.end(JSON.stringify({ message: 'Respuesta eliminada' }));
             }
         });
     },
 
+    
     createMultiple: (req, res) => {
-        //para guardar la información de la solicitud (las preguntas)
         let body = '';
     
-        //recibe la solicitud en chunks y los concatena con body
         req.on('data', (chunk) => {
             body += chunk;
         });
     
         req.on('end', () => {
-            //paresear de json a objeto js
-            const newPreguntas = JSON.parse(body);
+            const newRespuestas = JSON.parse(body);
     
-            //iterar cada pregunta en la lista de preguntas
-            newPreguntas.forEach((pregunta) => {
-                //cada pregunta se guarda 
-                Pregunta.create(pregunta, (err, result) => {
+            newRespuestas.forEach((respuesta) => {
+                Respuesta.create(respuesta, (err, result) => {
                     if (err) {
                         console.error(err);
                         res.end(JSON.stringify({ message: 'Error interno del servidor' }));
                     } else {
-                        console.log(`Pregunta creada con ID: ${result.insertId}`);
+                        console.log(`Respuesta creada con ID: ${result.insertId}`);
                     }
                 });
             });
     
-            res.end(JSON.stringify({ message: 'Preguntas creadas exitosamente' }));
+            res.end(JSON.stringify({ message: 'Respuestas creadas exitosamente' }));
         });
     }
 

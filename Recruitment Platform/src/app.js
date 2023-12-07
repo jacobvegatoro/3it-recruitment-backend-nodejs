@@ -8,6 +8,10 @@ const procesoRoutes = require('./routes/procesoRoutes');
 const entrevistaRoutes = require('./routes/entrevistaRoutes');
 const preguntaRoutes = require('./routes/preguntaRoutes');
 const respuestaRoutes = require('./routes/respuestaRoutes');
+const rolUsuarioRoutes = require('./routes/rolUsuarioRoutes');
+const usuarioRoutes = require('./routes/usuarioRoutes');
+const estadoRoutes = require('./routes/estadoRoutes');
+const estadoProcesoRoutes = require('./routes/estadoProcesoRoutes');
 
 const PORT = process.env.PORT || 5000;
 
@@ -46,6 +50,18 @@ const router = (req, res) => {
     }
     else if (pathname.startsWith('/respuestas')) {
         respuestaRoutes(req, res);
+    }
+    else if (pathname.startsWith('/rusuarios')) {
+        rolUsuarioRoutes(req, res);
+    }
+    else if (pathname.startsWith('/usuarios')) {
+        usuarioRoutes(req, res);
+    }
+    else if (pathname.startsWith('/estados')) {
+        estadoRoutes(req, res);
+    }
+    else if (pathname.startsWith('/eprocesos')) {
+        estadoProcesoRoutes(req, res);
     }
     else {
         res.end(JSON.stringify({ message: 'Ruta no encontrada' }));

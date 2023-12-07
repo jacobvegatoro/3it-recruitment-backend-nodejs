@@ -144,7 +144,7 @@ VALUES
     ('Respuesta 1', 7, 1, 1),
     ('Respuesta 2', 5, 2, 2),
     ('Respuesta 3', 6, 3, 3);
-    
+
 
 /*TABLA ROLES DE USUARIO*/
 CREATE TABLE rolUsuario (
@@ -153,9 +153,8 @@ CREATE TABLE rolUsuario (
 );
 INSERT INTO rolUsuario (nombre)
 VALUES
-    ('Rol 1'),
-    ('Rol 2'),
-    ('Rol 3');
+    ('Administrador'),
+    ('Usuario');
     
     
 /*TABLA USUARIO*/
@@ -166,14 +165,15 @@ CREATE TABLE usuario (
     login TEXT,
     clave TEXT,
     correo VARCHAR(100),
-    telefono INT,
+    telefono TEXT,
+    idRolUsuario INT,
     CONSTRAINT fk_rolUsuario_id FOREIGN KEY (idRolUsuario) REFERENCES rolUsuario(id)
 );
 INSERT INTO usuario (nombre, apellido, login, clave, correo, telefono, idRolUsuario)
 VALUES
-    ('Rol 1'),
-    ('Rol 2'),
-    ('Rol 3');    
+    ('Nombre 1', 'Apellido 1', 'login1', 'password1', 'email1@gmail.com', '+56991234', 1),
+    ('Nombre 2', 'Apellido 2', 'login2', 'password2', 'email2@gmail.com', '+56991234', 2),
+    ('Nombre 3', 'Apellido 3', 'login3', 'password3', 'email3@gmail.com', '+56991234', 2);
 
 
 /*TABLA ROLES DE ESTADO*/
@@ -183,9 +183,15 @@ CREATE TABLE estado (
 );
 INSERT INTO estado (nombre)
 VALUES
-    ('Estado 1'),
-    ('Estado 2'),
-    ('Estado 3');
+    ('Iniciado'),
+    ('Prueba técnica'),
+    ('Descartado prueba técnica'),
+    ('Entrevista técnica'),
+    ('Descartado entrevista técnica'),
+    ('Entrevista cliente'),
+    ('Descartado entrevista cliente'),
+    ('Entrevista psicológica'),
+    ('Contratado');
     
     
 /* TABLA ESTADO-PROCESO */
@@ -193,18 +199,18 @@ CREATE TABLE estadoProceso (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     comentario TEXT,
-    -- idProceso, idEstado, idUsuario
-    idEntrevista INT,
-    idPregunta INT,
-    CONSTRAINT fk_entrevista_id FOREIGN KEY (idEntrevista) REFERENCES entrevista(id),
-    CONSTRAINT fk_pregunta_respuesta_id FOREIGN KEY (idPregunta) REFERENCES pregunta(id)
+    idProceso INT,
+    idEstado INT,
+    idUsuario INT,
+    CONSTRAINT fk_estado_proceso_id FOREIGN KEY (idProceso) REFERENCES proceso(id),
+    CONSTRAINT fk_estado_id FOREIGN KEY (idEstado) REFERENCES estado(id),
+    CONSTRAINT fk_usuario_id FOREIGN KEY (idUsuario) REFERENCES usuario(id)
 );
-INSERT INTO respuesta (detalle, puntaje, idEntrevista, idPregunta)
+INSERT INTO estadoProceso (comentario, idProceso, idEstado, idUsuario)
 VALUES
-    ('Respuesta 1', 7, 1, 1),
-    ('Respuesta 2', 5, 2, 2),
-    ('Respuesta 3', 6, 3, 3);    
-
+    ('Comentario 1', 1, 1, 1),
+    ('Comentario 2', 2, 2, 2),
+    ('Comentario 3', 3, 3, 3);    
 
 
 
@@ -218,36 +224,15 @@ SELECT * FROM entrevista;
 SELECT * FROM pregunta;
 SELECT * FROM respuesta;
 SELECT * FROM rolUsuario;
-
-/*Todas las células que tiene un cliente en específico (query del lado del cliente)*/
-SELECT * FROM celula WHERE idCliente = 1;
-
-/**/
-SELECT celula.*, cliente.*
-FROM cliente
-JOIN celula ON cliente.id = celula.idCliente
-WHERE idCliente = 1;
-
-/**/
-SELECT cliente.nombre AS nombre_cliente, celula.nombre AS nombre_celula
-FROM cliente
-JOIN celula ON cliente.id = celula.idCliente
-WHERE cliente.nombre = 'Banco de Chile';
+SELECT * FROM usuario;
+SELECT * FROM estado;
+SELECT * FROM estadoProceso;
 
 
-/*Cliente al que está asociada la célula (query del lado de la célula)*/
-SELECT celula.*, cliente.*
-FROM celula
-JOIN cliente ON celula.idCliente = cliente.id
-WHERE celula.id = 1;
 
-/* Búsqueda de postulante */
-SELECT * FROM postulante
-WHERE nombres LIKE 'Juan' OR apellidos LIKE 'Juan';
 
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY 'nadmin';
-
 
 
 
@@ -258,3 +243,8 @@ drop table rol;
 drop table proceso;
 drop table entrevista;
 drop table pregunta;
+drop table respuesta;
+drop table rolUsuario;
+drop table usuario;
+drop table estado;
+drop table estadoProceso;

@@ -213,7 +213,6 @@ VALUES
     ('Comentario 3', 3, 3, 3);    
 
 
-
     
 SELECT * FROM postulante;
 SELECT * FROM cliente;

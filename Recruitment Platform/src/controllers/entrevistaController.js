@@ -1,82 +1,78 @@
 const Entrevista = require('../models/entrevistaModel')
-const url = require('url');
-const PAGE_SIZE = 2;
+const limit = 10;
 
-module.exports = {
-    getAll: (req, res) => {
-        Entrevista.getAll((err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify(result));
-            }
-        });
-    },
-
-    getById: (req, res) => {
-        const id = req.params.id;
-        Entrevista.getById(id, (err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else if (!result || result.length === 0) {
-                res.end(JSON.stringify({ message: 'Entrevista no encontrada' }));
-            } else {
-                res.end(JSON.stringify(result));
-            }
-        });
-    },
-
-    create: (req, res) => {
-        const newEntrevista = req.body;
-        Entrevista.create(newEntrevista, (err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify({ message: 'Entrevista creada', id: result.insertId }));
-            }
-        });
-    },
-
-    update: (req, res) => {
-        const id = req.params.id;
-        const updatedEntrevista = req.body;
-        Entrevista.update(id, updatedEntrevista, (err) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify({ message: 'Entrevista actualizada' }));
-            }
-        });
-    },
-
-    delete: (req, res) => {
-        const id = req.params.id;
-        Entrevista.delete(id, (err) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify({ message: 'Entrevista eliminada' }));
-            }
-        });
-    },
-
-    getAllPaginated: (req, res) => {
-        const parsedUrl = url.parse(req.url, true);
-        const page = parseInt(parsedUrl.query.page) || 1;
-
-        Entrevista.getAllPaginated(page, PAGE_SIZE, (err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify(result));
-            }
-        });
+exports.getAll = async (req, res) => {
+    try {
+        const result = await Entrevista.getAll();
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
     }
+};
 
+exports.getById = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const result = await Entrevista.getById(id);
+
+        if (!result || result.length === 0) {
+            res.status(404).json({ message: 'Entrevista no encontrado' });
+        } else {
+            res.status(200).json(result);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+exports.create = async (req, res) => {
+    const newEntrevista = req.body;
+
+    try {
+        const postId = await Entrevista.create(newEntrevista);
+        res.status(201).json({ message: 'Entrevista creado', id: postId });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+exports.update = async (req, res) => {
+    const id = req.params.id;
+    const updatedEntrevista = req.body;
+
+    try {
+        await Entrevista.update(id, updatedEntrevista);
+        res.status(200).json({ message: 'Entrevista actualizado' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+exports.delete = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        await Entrevista.delete(id);
+        res.status(200).json({ message: 'Entrevista eliminado' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+exports.getAllPaginated = async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+
+    try {
+        const result = await Entrevista.getAllPaginated(page, limit);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
 };

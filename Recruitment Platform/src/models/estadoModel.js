@@ -1,16 +1,28 @@
 const db = require('../config/database');
 
 class Estado {
-    static getAll(callback) {
-        db.query('SELECT * FROM estado', callback);
+    static getAll() {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM estado', (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static getById(id, callback) {
-        db.query('SELECT * FROM estado WHERE id = ?', [id], callback);
-    }
-
-    static create(estado, callback) {
-        db.query('INSERT INTO estado SET ?', estado, callback);
+    static getById(id) {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM estado WHERE id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
 }

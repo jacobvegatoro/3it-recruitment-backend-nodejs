@@ -1,24 +1,64 @@
 const db = require('../config/database');
 
 class Pregunta {
-    static getAll(callback) {
-        db.query('SELECT * FROM pregunta', callback);
+    static getAll() {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM pregunta', (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static getById(id, callback) {
-        db.query('SELECT * FROM pregunta WHERE id = ?', [id], callback);
+    static getById(id) {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM pregunta WHERE id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static create(pregunta, callback) {
-        db.query('INSERT INTO pregunta SET ?', pregunta, callback);
+    static create(pregunta) {
+        return new Promise((resolve, reject) => {
+            db.query('INSERT INTO pregunta SET ?', pregunta, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.insertId);
+                }
+            });
+        });
     }
 
-    static update(id, updatedPregunta, callback) {
-        db.query('UPDATE pregunta SET ? WHERE id = ?', [updatedPregunta, id], callback);
+    static update(id, updatedPregunta) {
+        return new Promise((resolve, reject) => {
+            db.query('UPDATE pregunta SET ? WHERE id = ?', [updatedPregunta, id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static delete(id, callback) {
-        db.query('DELETE FROM pregunta WHERE id = ?', [id], callback);
+    static delete(id) {
+        return new Promise((resolve, reject) => {
+            db.query('DELETE FROM pregunta WHERE id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
 }

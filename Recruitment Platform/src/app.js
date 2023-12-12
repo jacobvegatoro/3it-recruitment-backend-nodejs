@@ -1,5 +1,13 @@
-const http = require('http');
-const { parse } = require('url');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(bodyParser.json());
+
 const postulanteRoutes = require('./routes/postulanteRoutes');
 const clienteRoutes = require('./routes/clienteRoutes');
 const celulaRoutes = require('./routes/celulaRoutes');
@@ -12,72 +20,30 @@ const rolUsuarioRoutes = require('./routes/rolUsuarioRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const estadoRoutes = require('./routes/estadoRoutes');
 const estadoProcesoRoutes = require('./routes/estadoProcesoRoutes');
+const authRoutes = require('./auth/authRoutes')
 
-const PORT = process.env.PORT || 5000;
+app.use('/postulantes', postulanteRoutes);
+app.use('/clientes', clienteRoutes);
+app.use('/celulas', celulaRoutes);
+app.use('/roles', rolRoutes);
+app.use('/procesos', procesoRoutes);
+app.use('/entrevistas', entrevistaRoutes);
+app.use('/preguntas', preguntaRoutes);
+app.use('/respuestas', respuestaRoutes);
+app.use('/rolesusuarios', rolUsuarioRoutes);
+app.use('/usuarios', usuarioRoutes);
+app.use('/estados', estadoRoutes);
+app.use('/estadoprocesos', estadoProcesoRoutes);
 
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Content-Type': 'application/json'
-};
-
-const router = (req, res) => {
-    const { pathname } = parse(req.url, true);
-
-    res.writeHead(200, corsHeaders);
-
-    if (pathname.startsWith('/postulantes')) {
-        postulanteRoutes(req, res);
-    }
-    else if (pathname.startsWith('/clientes')) {
-        clienteRoutes(req, res);
-    }
-    else if (pathname.startsWith('/celulas')) {
-        celulaRoutes(req, res);
-    }
-    else if (pathname.startsWith('/roles')) {
-        rolRoutes(req, res);
-    }
-    else if (pathname.startsWith('/procesos')) {
-        procesoRoutes(req, res);
-    }
-    else if (pathname.startsWith('/entrevistas')) {
-        entrevistaRoutes(req, res);
-    }
-    else if (pathname.startsWith('/preguntas')) {
-        preguntaRoutes(req, res);
-    }
-    else if (pathname.startsWith('/respuestas')) {
-        respuestaRoutes(req, res);
-    }
-    else if (pathname.startsWith('/rusuarios')) {
-        rolUsuarioRoutes(req, res);
-    }
-    else if (pathname.startsWith('/usuarios')) {
-        usuarioRoutes(req, res);
-    }
-    else if (pathname.startsWith('/estados')) {
-        estadoRoutes(req, res);
-    }
-    else if (pathname.startsWith('/eprocesos')) {
-        estadoProcesoRoutes(req, res);
-    }
-    else {
-        res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
-    }
-};
-
-const server = http.createServer((req, res) => {
-    try {
-        router(req, res);
-    } catch (error) {
-        console.error('Error inesperado:', error);
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-    }
+app.use((req, res) => {
+    res.status(404).json({ message: 'Ruta no encontrada' });
 });
 
-server.listen(PORT, () => {
+app.use((err, req, res, next) => {
+    console.error('Error inesperado:', err);
+    res.status(500).json({ message: 'Error interno del servidor' });
+});
+
+app.listen(PORT, () => {
     console.log(`Servidor en ejecución en el puerto ${PORT}`);
 });

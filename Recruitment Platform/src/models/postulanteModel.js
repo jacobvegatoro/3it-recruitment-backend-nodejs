@@ -1,27 +1,67 @@
 const db = require('../config/database');
 
 class Postulante {
-    static getAll(callback) {
-        db.query('SELECT * FROM postulante', callback);
+    static getAll() {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM postulante', (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static getById(id, callback) {
-        db.query('SELECT * FROM postulante WHERE id = ?', [id], callback);
+    static getById(id) {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM postulante WHERE id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static create(postulante, callback) {
-        db.query('INSERT INTO postulante SET ?', postulante, callback);
+    static create(postulante) {
+        return new Promise((resolve, reject) => {
+            db.query('INSERT INTO postulante SET ?', postulante, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.insertId);
+                }
+            });
+        });
     }
 
-    static update(id, updatedPostulante, callback) {
-        db.query('UPDATE postulante SET ? WHERE id = ?', [updatedPostulante, id], callback);
+    static update(id, updatedPostulante) {
+        return new Promise((resolve, reject) => {
+            db.query('UPDATE postulante SET ? WHERE id = ?', [updatedPostulante, id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static delete(id, callback) {
-        db.query('DELETE FROM postulante WHERE id = ?', [id], callback);
+    static delete(id) {
+        return new Promise((resolve, reject) => {
+            db.query('DELETE FROM postulante WHERE id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static searchByKeyword(keyword, callback) {
+    static searchByKeyword(keyword) {
         const query = `
             SELECT *
             FROM postulante
@@ -29,13 +69,30 @@ class Postulante {
         `;
         const keywordPattern = `%${keyword}%`;
 
-        db.query(query, [keywordPattern, keywordPattern], callback);
+        return new Promise((resolve, reject) => {
+            db.query(query, [keywordPattern, keywordPattern], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static getAllPaginated(page, limit, callback) {
+    static getAllPaginated(page, limit) {
         const offset = (page - 1) * limit;
         const query = 'SELECT * FROM postulante LIMIT ?, ?';
-        db.query(query, [offset, limit], callback);
+
+        return new Promise((resolve, reject) => {
+            db.query(query, [offset, limit], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 }
 

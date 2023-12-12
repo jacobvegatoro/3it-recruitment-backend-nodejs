@@ -1,27 +1,23 @@
 const Rol = require('../models/rolModel');
 
-module.exports = {
-    getAll: (req, res) => {
-        Rol.getAll((err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            }
-            else {
-                res.end(JSON.stringify(result));
-            }
-        })
-    },
-
-    create: (req, res) => {
-        const newRol = req.body;
-        Rol.create(newRol, (err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify({ message: 'Rol creado', id: result.insertId }));
-            }
-        });
+exports.getAll = async (req, res) => {
+    try {
+        const result = await Rol.getAll();
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
     }
-}
+};
+
+exports.create = async (req, res) => {
+    const newRol = req.body;
+
+    try {
+        const postId = await Rol.create(newRol);
+        res.status(201).json({ message: 'Rol creado', id: postId });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};

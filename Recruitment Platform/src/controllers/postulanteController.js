@@ -1,92 +1,96 @@
 const Postulante = require('../models/postulanteModel');
-const url = require('url');
-const PAGE_SIZE = 10;
+const limit = 10;
 
-module.exports = {
-    getAll: (req, res) => {
-        Postulante.getAll((err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify(result));
-            }
-        });
-    },
-
-    getById: (req, res) => {
-        const id = req.params.id;
-        Postulante.getById(id, (err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else if (!result || result.length === 0) {
-                res.end(JSON.stringify({ message: 'Postulante no encontrado' }));
-            } else {
-                res.end(JSON.stringify(result));
-            }
-        });
-    },
-
-    create: (req, res) => {
-        const newPostulante = req.body;
-        Postulante.create(newPostulante, (err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify({ message: 'Postulante creado', id: result.insertId }));
-            }
-        });
-    },
-
-    update: (req, res) => {
-        const id = req.params.id;
-        const updatedPostulante = req.body;
-        Postulante.update(id, updatedPostulante, (err) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify({ message: 'Postulante actualizado' }));
-            }
-        });
-    },
-
-    delete: (req, res) => {
-        const id = req.params.id;
-        Postulante.delete(id, (err) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify({ message: 'Postulante eliminado' }));
-            }
-        });
-    },
-
-    searchByKeyword: (keyword, callback) => {
-        Postulante.searchByKeyword(keyword, (err, result) => {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, result);
-            }
-        });
-    },
-
-    getAllPaginated: (req, res) => {
-        const parsedUrl = url.parse(req.url, true);
-        const page = parseInt(parsedUrl.query.page) || 1;
-
-        Postulante.getAllPaginated(page, PAGE_SIZE, (err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify(result));
-            }
-        });
+exports.getAll = async (req, res) => {
+    try {
+        const result = await Postulante.getAll();
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
     }
+};
 
+exports.getById = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const result = await Postulante.getById(id);
+
+        if (!result || result.length === 0) {
+            res.status(404).json({ message: 'Postulante no encontrado' });
+        } else {
+            res.status(200).json(result);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+exports.create = async (req, res) => {
+    const newPostulante = req.body;
+
+    try {
+        const postId = await Postulante.create(newPostulante);
+        res.status(201).json({ message: 'Postulante creado', id: postId });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+exports.update = async (req, res) => {
+    const id = req.params.id;
+    const updatedPostulante = req.body;
+
+    try {
+        await Postulante.update(id, updatedPostulante);
+        res.status(200).json({ message: 'Postulante actualizado' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+exports.delete = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        await Postulante.delete(id);
+        res.status(200).json({ message: 'Postulante eliminado' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+exports.searchByKeyword = async (req, res) => {
+    const keyword = req.query.keyword;
+
+    try {
+        const result = await Postulante.searchByKeyword(keyword);
+        
+        if (!result || result.length === 0) {
+            res.status(404).json({ message: 'No se encontraron postulantes con la palabra clave proporcionada' });
+        } else {
+            res.status(200).json(result);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+
+exports.getAllPaginated = async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+
+    try {
+        const result = await Postulante.getAllPaginated(page, limit);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
 };

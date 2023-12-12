@@ -1,16 +1,7 @@
-const rolUsuarioController = require('../controllers/rolUsuarioController')
-const url = require('url')
+const express = require('express');
+const router = express.Router();
+const rolUsuarioController = require('../controllers/rolUsuarioController');
 
-module.exports = (req, res) => {
-    const parsedUrl = url.parse(req.url, true)
-    const { pathname, method } = parsedUrl;
+router.get('/', rolUsuarioController.getAll);
 
-    //GET http://localhost:5000/rolesUsuario
-    if (req.method === 'GET') {
-        rolUsuarioController.getAll(req, res);
-    }
-    else {
-        res.end(JSON.stringify({ message: 'Ruta no encontrada' }));
-    }
-
-}
+module.exports = router;

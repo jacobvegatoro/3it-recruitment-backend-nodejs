@@ -1,41 +1,28 @@
 const Estado = require('../models/estadoModel');
 
-module.exports = {
-    getAll: (req, res) => {
-        Estado.getAll((err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify(result));
-            }
-        });
-    },
-
-    getById: (req, res) => {
-        const id = req.params.id;
-        Estado.getById(id, (err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else if (!result || result.length === 0) {
-                res.end(JSON.stringify({ message: 'Estado no encontrado' }));
-            } else {
-                res.end(JSON.stringify(result));
-            }
-        });
-    },
-
-    create: (req, res) => {
-        const newEstado = req.body;
-        Estado.create(newEstado, (err, result) => {
-            if (err) {
-                console.error(err);
-                res.end(JSON.stringify({ message: 'Error interno del servidor' }));
-            } else {
-                res.end(JSON.stringify({ message: 'Estado creado', id: result.insertId }));
-            }
-        });
+exports.getAll = async (req, res) => {
+    try {
+        const result = await Estado.getAll();
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
     }
+};
 
+exports.getById = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const result = await Estado.getById(id);
+
+        if (!result || result.length === 0) {
+            res.status(404).json({ message: 'Estado no encontrado' });
+        } else {
+            res.status(200).json(result);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
 };

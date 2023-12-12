@@ -1,32 +1,80 @@
 const db = require('../config/database');
 
 class Entrevista {
-    static getAll(callback) {
-        db.query('SELECT * FROM entrevista', callback);
+    static getAll() {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM entrevista', (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static getById(id, callback) {
-        db.query('SELECT * FROM entrevista WHERE id = ?', [id], callback);
+    static getById(id) {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM entrevista WHERE id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static create(entrevista, callback) {
-        db.query('INSERT INTO entrevista SET ?', entrevista, callback);
+    static create(entrevista) {
+        return new Promise((resolve, reject) => {
+            db.query('INSERT INTO entrevista SET ?', entrevista, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.insertId);
+                }
+            });
+        });
     }
 
-    static update(id, updatedEntrevista, callback) {
-        db.query('UPDATE entrevista SET ? WHERE id = ?', [updatedEntrevista, id], callback);
+    static update(id, updatedEntrevista) {
+        return new Promise((resolve, reject) => {
+            db.query('UPDATE entrevista SET ? WHERE id = ?', [updatedEntrevista, id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static delete(id, callback) {
-        db.query('DELETE FROM entrevista WHERE id = ?', [id], callback);
+    static delete(id) {
+        return new Promise((resolve, reject) => {
+            db.query('DELETE FROM entrevista WHERE id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
     }
 
-    static getAllPaginated(page, limit, callback) {
+    static getAllPaginated(page, limit) {
         const offset = (page - 1) * limit;
         const query = 'SELECT * FROM entrevista LIMIT ?, ?';
-        db.query(query, [offset, limit], callback);
-    }
 
+        return new Promise((resolve, reject) => {
+            db.query(query, [offset, limit], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
 }
 
 module.exports = Entrevista;

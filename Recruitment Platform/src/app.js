@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -20,7 +22,6 @@ const rolUsuarioRoutes = require('./routes/rolUsuarioRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const estadoRoutes = require('./routes/estadoRoutes');
 const estadoProcesoRoutes = require('./routes/estadoProcesoRoutes');
-const authRoutes = require('./auth/authRoutes')
 
 app.use('/postulantes', postulanteRoutes);
 app.use('/clientes', clienteRoutes);

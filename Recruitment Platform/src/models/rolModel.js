@@ -1,9 +1,9 @@
-const db = require('../config/database');
+const { pool } = require('../config/database');
 
 class Rol {
     static getAll() {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM rol', (err, result) => {
+            pool.query('SELECT * FROM rol', (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -15,7 +15,7 @@ class Rol {
 
     static create(rol) {
         return new Promise((resolve, reject) => {
-            db.query('INSERT INTO rol SET ?', rol, (err, result) => {
+            pool.query('INSERT INTO rol SET ?', rol, (err, result) => {
                 if (err) {
                     reject(err);
                 } else {

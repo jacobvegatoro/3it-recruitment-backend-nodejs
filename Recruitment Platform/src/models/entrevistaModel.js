@@ -1,9 +1,9 @@
-const db = require('../config/database');
+const { pool } = require('../config/database');
 
 class Entrevista {
     static getAll() {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM entrevista', (err, result) => {
+            pool.query('SELECT * FROM entrevista', (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -15,7 +15,7 @@ class Entrevista {
 
     static getById(id) {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM entrevista WHERE id = ?', [id], (err, result) => {
+            pool.query('SELECT * FROM entrevista WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -27,7 +27,7 @@ class Entrevista {
 
     static create(entrevista) {
         return new Promise((resolve, reject) => {
-            db.query('INSERT INTO entrevista SET ?', entrevista, (err, result) => {
+            pool.query('INSERT INTO entrevista SET ?', entrevista, (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -39,7 +39,7 @@ class Entrevista {
 
     static update(id, updatedEntrevista) {
         return new Promise((resolve, reject) => {
-            db.query('UPDATE entrevista SET ? WHERE id = ?', [updatedEntrevista, id], (err, result) => {
+            pool.query('UPDATE entrevista SET ? WHERE id = ?', [updatedEntrevista, id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -51,7 +51,7 @@ class Entrevista {
 
     static delete(id) {
         return new Promise((resolve, reject) => {
-            db.query('DELETE FROM entrevista WHERE id = ?', [id], (err, result) => {
+            pool.query('DELETE FROM entrevista WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -66,7 +66,7 @@ class Entrevista {
         const query = 'SELECT * FROM entrevista LIMIT ?, ?';
 
         return new Promise((resolve, reject) => {
-            db.query(query, [offset, limit], (err, result) => {
+            pool.query(query, [offset, limit], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {

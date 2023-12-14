@@ -12,7 +12,6 @@ y, opcionalmente, también manejaré la autorización verificando los roles del 
 */
 
 const jwt = require('jsonwebtoken');
-const { pool } = require('../config/database');
 
 const requireAuth = (req, res, next) => {
   const token = req.header('Authorization');

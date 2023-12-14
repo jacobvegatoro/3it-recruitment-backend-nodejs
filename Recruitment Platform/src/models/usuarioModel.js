@@ -1,9 +1,9 @@
-const db = require('../config/database');
+const { pool } = require('../config/database');
 
 class Usuario {
     static getAll() {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM usuario', (err, result) => {
+            pool.query('SELECT * FROM usuario', (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -15,7 +15,7 @@ class Usuario {
 
     static getById(id) {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM usuario WHERE id = ?', [id], (err, result) => {
+            pool.query('SELECT * FROM usuario WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -27,7 +27,7 @@ class Usuario {
 
     static create(usuario) {
         return new Promise((resolve, reject) => {
-            db.query('INSERT INTO usuario SET ?', usuario, (err, result) => {
+            pool.query('INSERT INTO usuario SET ?', usuario, (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -39,7 +39,7 @@ class Usuario {
 
     static update(id, updatedUsuario) {
         return new Promise((resolve, reject) => {
-            db.query('UPDATE usuario SET ? WHERE id = ?', [updatedUsuario, id], (err, result) => {
+            pool.query('UPDATE usuario SET ? WHERE id = ?', [updatedUsuario, id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -51,7 +51,7 @@ class Usuario {
 
     static delete(id) {
         return new Promise((resolve, reject) => {
-            db.query('DELETE FROM usuario WHERE id = ?', [id], (err, result) => {
+            pool.query('DELETE FROM usuario WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {

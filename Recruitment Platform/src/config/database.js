@@ -1,18 +1,11 @@
-const mysql = require('mysql');
+const mysql2 = require('mysql2');
 
-const connection = mysql.createConnection({
+const pool = mysql2.createPool({
     host: '127.0.0.1',
     user: 'root',
     password: 'nadmin',
-    database: 'recruitment_db'
+    database: 'recruitment_db',
+    connectionLimit: 100,
 });
 
-connection.connect((err) => {
-    if (err) {
-        console.error('Error de conexión a la base de datos:', err);
-    } else {
-        console.log('Conexión exitosa a la base de datos');
-    }
-});
-
-module.exports = connection;
+module.exports = { pool };

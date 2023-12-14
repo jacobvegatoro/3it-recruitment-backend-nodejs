@@ -1,9 +1,9 @@
-const db = require('../config/database');
+const { pool } = require('../config/database');
 
 class EstadoProceso {
     static getAll() {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM estadoProceso', (err, result) => {
+            pool.query('SELECT * FROM estadoProceso', (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -15,7 +15,7 @@ class EstadoProceso {
 
     static getById(id) {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM estadoProceso WHERE id = ?', [id], (err, result) => {
+            pool.query('SELECT * FROM estadoProceso WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -46,7 +46,7 @@ class EstadoProceso {
                 INNER JOIN celula ON proceso.idCelula = celula.id
                 INNER JOIN cliente ON celula.idCliente = cliente.id
             `;
-            db.query(query, (err, result) => {
+            pool.query(query, (err, result) => {
                 if (err) {
                     reject(err);
                 } else {

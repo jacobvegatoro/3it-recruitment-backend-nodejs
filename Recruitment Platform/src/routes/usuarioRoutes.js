@@ -6,7 +6,7 @@ const validationMiddleware = require('../middlewares/validationMiddleware');
 
 router.get('/:id', requireAuth, usuarioController.getById);
 
-router.post('/', requireAuth, validationMiddleware.validateCreateUser, validationMiddleware.handleValidationErrors, usuarioController.create);
+router.post('/', validationMiddleware.validateCreateUser, validationMiddleware.handleValidationErrors, usuarioController.create);
 router.put('/:id', requireAuth, validationMiddleware.validateUpdateUser, validationMiddleware.handleValidationErrors, usuarioController.update);
 
 router.delete('/:id', requireAuth, requireRole(1), usuarioController.delete);

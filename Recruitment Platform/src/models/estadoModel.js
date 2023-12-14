@@ -1,9 +1,9 @@
-const db = require('../config/database');
+const { pool } = require('../config/database');
 
 class Estado {
     static getAll() {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM estado', (err, result) => {
+            pool.query('SELECT * FROM estado', (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -15,7 +15,7 @@ class Estado {
 
     static getById(id) {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM estado WHERE id = ?', [id], (err, result) => {
+            pool.query('SELECT * FROM estado WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {

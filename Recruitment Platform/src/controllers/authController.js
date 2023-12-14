@@ -9,10 +9,8 @@ const { validationResult } = require('express-validator');
 const { pool } = require('../config/database');
 
 const AuthController = {
-  // Función para manejar el inicio de sesión
   login: async (req, res) => {
     try {
-      // Validar la entrada
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -20,25 +18,43 @@ const AuthController = {
 
       const { login, clave } = req.body;
 
-      // Buscar el usuario en la base de datos
-      const user = await pool.query('SELECT * FROM usuario WHERE login = ? LIMIT 1', [login]);
-      if (user.length === 0) {
-        return res.status(401).json({ error: 'Credenciales incorrectas' });
-      }
+      pool.query('SELECT * FROM usuario WHERE login = ? LIMIT 1', [login], async (err, results) => {
+        if (err) {
+          console.error('Error en la consulta:', err);
+          return res.status(500).json({ error: 'Error interno del servidor' });
+        }
 
-      // Comparar la contraseña ingresada con la almacenada en la base de datos
-      const match = await bcrypt.compare(clave, user[0].clave);
-      if (!match) {
-        return res.status(401).json({ error: 'Credenciales incorrectas' });
-      }
+        const user = results[0];
 
-      // Crear y firmar el token JWT
-      const token = jwt.sign(
-        { userId: user[0].id, login: user[0].login, idRolUsuario: user[0].idRolUsuario },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-      );
-      res.json({ token });
+        if (!user) {
+          return res.status(401).json({ error: 'Credenciales incorrectas' });
+        }
+
+        console.log('Usuario:', user);
+        console.log('Contraseña ingresada:', clave);
+        console.log('Contraseña almacenada:', user.clave);
+
+        try {
+          const match = await bcrypt.compare(clave, user.clave);
+
+          if (!match) {
+            return res.status(401).json({ error: 'Credenciales incorrectas' });
+          }
+
+          console.log('JWT_SECRET:', process.env.JWT_SECRET);
+          
+          const token = jwt.sign(
+            { userId: user.id, login: user.login, idRolUsuario: user.idRolUsuario },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+          );
+
+          res.json({ token });
+        } catch (compareErr) {
+          console.error('Error al comparar contraseñas:', compareErr);
+          return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+      });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Error interno del servidor' });

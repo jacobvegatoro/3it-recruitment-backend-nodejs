@@ -1,9 +1,9 @@
-const db = require('../config/database');
+const { pool } = require('../config/database');
 
 class Proceso {
     static getAll() {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM proceso', (err, result) => {
+            pool.query('SELECT * FROM proceso', (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -15,7 +15,7 @@ class Proceso {
 
     static getById(id) {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM proceso WHERE id = ?', [id], (err, result) => {
+            pool.query('SELECT * FROM proceso WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -27,7 +27,7 @@ class Proceso {
 
     static create(proceso) {
         return new Promise((resolve, reject) => {
-            db.query('INSERT INTO proceso SET ?', proceso, (err, result) => {
+            pool.query('INSERT INTO proceso SET ?', proceso, (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -39,7 +39,7 @@ class Proceso {
 
     static update(id, updatedProceso) {
         return new Promise((resolve, reject) => {
-            db.query('UPDATE proceso SET ? WHERE id = ?', [updatedProceso, id], (err, result) => {
+            pool.query('UPDATE proceso SET ? WHERE id = ?', [updatedProceso, id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -51,7 +51,7 @@ class Proceso {
 
     static delete(id) {
         return new Promise((resolve, reject) => {
-            db.query('DELETE FROM proceso WHERE id = ?', [id], (err, result) => {
+            pool.query('DELETE FROM proceso WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {

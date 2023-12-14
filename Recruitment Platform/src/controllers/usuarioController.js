@@ -1,4 +1,11 @@
 const Usuario = require('../models/usuarioModel');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+/*
+saltRounds determina el costo del proceso de hash.
+Puedes ajustar este valor según tus necesidades de seguridad.
+Un valor común es 10, pero puedes usar un valor mayor para hacer el proceso más costoso y, por lo tanto, más seguro contra ataques de fuerza bruta.
+*/
 
 exports.getAll = async (req, res) => {
     try {
@@ -31,6 +38,9 @@ exports.create = async (req, res) => {
     const newUsuario = req.body;
 
     try {
+        const hashedPassword = await bcrypt.hash(newUsuario.clave, saltRounds);
+        newUsuario.clave = hashedPassword;
+
         const postId = await Usuario.create(newUsuario);
         res.status(201).json({ message: 'Usuario creado', id: postId });
     } catch (error) {
@@ -38,6 +48,7 @@ exports.create = async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
+
 
 exports.update = async (req, res) => {
     const id = req.params.id;

@@ -1,8 +1,3 @@
-/*
-Crea un controlador específico para la autenticación (authController.js).
-Aquí, tendrás funciones para manejar el inicio de sesión y la generación del token JWT.
-*/
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
@@ -41,11 +36,14 @@ const AuthController = {
             return res.status(401).json({ error: 'Credenciales incorrectas' });
           }
 
-          console.log('JWT_SECRET:', process.env.JWT_SECRET);
+          console.log('JWT_SECRET:', process.env.JWT_SECRET_KEY);
           
           const token = jwt.sign(
-            { userId: user.id, login: user.login, idRolUsuario: user.idRolUsuario },
-            process.env.JWT_SECRET,
+            { userId: user.id, 
+              login: user.login, 
+              idRolUsuario: user.idRolUsuario 
+            },
+            process.env.JWT_SECRET_KEY,
             { expiresIn: '1h' }
           );
 

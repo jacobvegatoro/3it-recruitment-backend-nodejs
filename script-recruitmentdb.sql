@@ -175,6 +175,12 @@ VALUES
     ('Nombre 2', 'Apellido 2', 'login2', 'password2', 'email2@gmail.com', '+56991234', 2),
     ('Nombre 3', 'Apellido 3', 'login3', 'password3', 'email3@gmail.com', '+56991234', 2);
 
+SELECT * FROM usuario WHERE login = 'nusuario2' LIMIT 1;
+select * from usuario;
+delete FROM usuario WHERE id = 4;
+
+
+
 
 /*TABLA ROLES DE ESTADO*/
 CREATE TABLE estado (

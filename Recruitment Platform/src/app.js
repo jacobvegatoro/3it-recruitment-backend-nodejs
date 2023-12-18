@@ -39,7 +39,7 @@ app.use('/estadoprocesos', estadoProcesoRoutes);
 app.use('/login', loginRoutes);
 
 app.use((req, res) => {
-    res.status(404).json({ message: 'Ruta no encontradaaa' });
+    res.status(404).json({ message: 'Ruta no encontrada' });
 });
 
 app.use((err, req, res, next) => {
@@ -48,5 +48,6 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor en ejecución en el puerto ${PORT}`);
+    console.log(`Servidor en ejecución en el puerto ${process.env.PORT}`);
+    console.log(`Secreto: ${process.env.JWT_SECRET_KEY}`)
 });

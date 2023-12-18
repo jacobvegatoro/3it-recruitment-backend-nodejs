@@ -1,8 +1,3 @@
-/*
-Crear un middleware para la validación de datos (validationMiddleware.js). 
-Express-validator para establecer reglas de validación para las solicitudes de entrada.
-*/
-
 const { validationResult, body, param } = require('express-validator');
 
 // Middleware para la validación de datos
@@ -31,7 +26,7 @@ const validationMiddleware = {
     body('idRolUsuario').not().exists().withMessage('El campo idRolUsuario no puede ser cambiado')
   ],
 
-  // menejo de errores de validación
+  // manejo de errores de validación
   handleValidationErrors: (req, res, next) => {
     const errors = validationResult(req);
 

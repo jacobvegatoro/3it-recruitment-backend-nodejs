@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const entrevistaController = require('../controllers/entrevistaController');
+const { requireAuth, requireRole } = require('../middlewares/authMiddleware');
 
-router.get('/paginacion', entrevistaController.getAllPaginated);
-router.get('/:id', entrevistaController.getById);
-router.post('/', entrevistaController.create);
-router.put('/:id', entrevistaController.update);
-router.delete('/:id', entrevistaController.delete);
-router.get('/', entrevistaController.getAll);
+router.get('/paginacion', requireAuth, entrevistaController.getAllPaginated);
+router.get('/:id', requireAuth, entrevistaController.getById);
+router.post('/', requireAuth, entrevistaController.create);
+router.put('/:id', requireAuth, entrevistaController.update);
+router.delete('/:id', requireAuth, entrevistaController.delete);
+router.get('/', requireAuth, entrevistaController.getAll);
 
 module.exports = router;

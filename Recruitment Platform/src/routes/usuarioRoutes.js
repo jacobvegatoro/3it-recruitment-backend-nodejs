@@ -4,25 +4,18 @@ const usuarioController = require('../controllers/usuarioController');
 const { requireAuth, requireRole } = require('../middlewares/authMiddleware');
 const validationMiddleware = require('../middlewares/validationMiddleware');
 
-router.get('/:id', requireAuth, usuarioController.getById);
-
-router.post('/', validationMiddleware.validateCreateUser, validationMiddleware.handleValidationErrors, usuarioController.create);
 router.put('/:id', requireAuth, validationMiddleware.validateUpdateUser, validationMiddleware.handleValidationErrors, usuarioController.update);
 
+// para borar a un usuario, se debe estar autenticado y ser admin
 router.delete('/:id', requireAuth, requireRole(1), usuarioController.delete);
+
+// para ver getById usuarios se necesita estar autenticado y ser admin
+router.get('/:id', requireAuth, requireRole(1), usuarioController.getById);
+
+// para ver getAll usuarios se necesita estar autenticado y ser admin
 router.get('/', requireAuth, requireRole(1), usuarioController.getAll);
 
+// para registrarse hay que cumplir con los requisitos del middleware (nombre, apellido, login, clave y telefono obligatorio, email debe ser email y rol debe ser numero entero)
+router.post('/', validationMiddleware.validateCreateUser, validationMiddleware.handleValidationErrors, usuarioController.create);
+
 module.exports = router;
-
-
-/*
-En usuarioRoutes.js, actualizar las rutas existentes para incluir la autenticación.
-Por ejemplo, si tienes un endpoint para obtener la lista de usuarios, asegúrate de agregar el middleware de autenticación.
-*/
-/*
-Actualiza las rutas para incluir la autorización.
-Por ejemplo, si tienes un endpoint para editar un usuario, verifica que solo los usuarios con ciertos roles específicos puedan realizar esta acción.
-*/
-/*
-Integra el middleware de validación en las rutas que manejan la entrada de datos, como la creación de un nuevo usuario.
-*/

@@ -16,6 +16,17 @@ router.get('/:id', requireAuth, requireRole(1), usuarioController.getById);
 router.get('/', requireAuth, requireRole(1), usuarioController.getAll);
 
 // para registrarse hay que cumplir con los requisitos del middleware (nombre, apellido, login, clave y telefono obligatorio, email debe ser email y rol debe ser numero entero)
-router.post('/', validationMiddleware.validateCreateUser, validationMiddleware.handleValidationErrors, usuarioController.create);
-
+router.post('/', requireAuth, requireRole(1), validationMiddleware.validateCreateUser, validationMiddleware.handleValidationErrors, usuarioController.create);
+/*
+Usuario insertado:
+{
+  "nombre": "Jacob",
+  "apellido": "Vega",
+  "login": "jvega",
+  "clave": "admin123",
+  "correo": "jacob.vega@3it.cl",
+  "telefono": "+569123456",
+  "idRolUsuario": 1
+}
+*/
 module.exports = router;

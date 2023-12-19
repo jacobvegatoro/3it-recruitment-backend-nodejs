@@ -8,6 +8,6 @@ router.get('/:id', requireAuth, respuestaController.getById);
 router.post('/', requireAuth, respuestaController.create);
 router.post('/multiples', requireAuth, respuestaController.createMultiple);
 router.put('/:id', requireAuth, respuestaController.update);
-router.delete('/:id', requireAuth, respuestaController.delete);
+router.delete('/:id', requireAuth, requireRole(1), respuestaController.delete);
 
 module.exports = router;

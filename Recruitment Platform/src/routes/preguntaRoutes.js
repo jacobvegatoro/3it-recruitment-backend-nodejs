@@ -8,6 +8,6 @@ router.get('/:id', requireAuth, preguntaController.getById);
 router.post('/', requireAuth, preguntaController.create);
 router.post('/multiples', requireAuth, preguntaController.createMultiple);
 router.put('/:id', requireAuth, preguntaController.update);
-router.delete('/:id', requireAuth, preguntaController.delete);
+router.delete('/:id', requireAuth, requireRole(1), preguntaController.delete);
 
 module.exports = router;

@@ -8,7 +8,7 @@ router.get('/paginacion', requireAuth, postulanteController.getAllPaginated);
 router.get('/:id', requireAuth, postulanteController.getById);
 router.post('/', requireAuth, postulanteController.create);
 router.put('/:id', requireAuth, postulanteController.update);
-router.delete('/:id', requireAuth, postulanteController.delete);
+router.delete('/:id', requireAuth, requireRole(1), postulanteController.delete);
 router.get('/', requireAuth, postulanteController.getAll);
 
 module.exports = router;

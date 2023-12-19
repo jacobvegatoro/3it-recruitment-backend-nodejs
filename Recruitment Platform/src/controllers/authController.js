@@ -73,6 +73,16 @@ const AuthController = {
       console.error(error);
       res.status(500).json({ error: 'Error interno del servidor' });
     }
+  },
+
+  logout: async (req, res) => {
+    try {
+      //lógica por implementar
+      res.json({ message: 'Logout exitoso' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
   }
 
 };

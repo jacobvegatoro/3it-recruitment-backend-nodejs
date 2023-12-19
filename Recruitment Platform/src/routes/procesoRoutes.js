@@ -6,7 +6,7 @@ const { requireAuth, requireRole } = require('../middlewares/authMiddleware');
 router.get('/:id', requireAuth, procesoController.getById);
 router.post('/', requireAuth, procesoController.create);
 router.put('/:id', requireAuth, procesoController.update);
-router.delete('/:id', requireAuth, procesoController.delete);
+router.delete('/:id', requireAuth, requireRole(1), procesoController.delete);
 router.get('/', requireAuth, procesoController.getAll);
 
 module.exports = router;

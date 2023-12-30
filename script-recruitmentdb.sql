@@ -171,16 +171,9 @@ CREATE TABLE usuario (
 );
 INSERT INTO usuario (nombre, apellido, login, clave, correo, telefono, idRolUsuario)
 VALUES
-    ('Nombre 1', 'Apellido 1', 'login1', 'password1', 'email1@gmail.com', '+56991234', 1),
-    ('Nombre 2', 'Apellido 2', 'login2', 'password2', 'email2@gmail.com', '+56991234', 2),
-    ('Nombre 3', 'Apellido 3', 'login3', 'password3', 'email3@gmail.com', '+56991234', 2);
-
-SELECT * FROM usuario WHERE login = 'nusuario2' LIMIT 1;
-select * from usuario;
-delete FROM usuario WHERE id = 4;
-
-
-
+    ('Nombre 1', 'Apellido 1', 'login1', '$2a$10$9Q5UO0IHfE8IOAvifJ7x8eK9DnT6QVx6I.YTq6OS8WgIeRlhdTUju', 'email1@gmail.com', '+56991234', 1),
+    ('Nombre 2', 'Apellido 2', 'login2', '$2a$10$SPvon0fcRwXzdyRhKZOxMOpG8VliFp3PdrpF7XX/R5de3K2ccFzS2', 'email2@gmail.com', '+56991234', 2),
+    ('Nombre 3', 'Apellido 3', 'login3', '$2a$10$BSYJhag4r0Mq0CPI2eYUuOLr6.o6uicj9Na5FRi0ERtOLi6b/Y0KW', 'email3@gmail.com', '+56991234', 2);
 
 /*TABLA ROLES DE ESTADO*/
 CREATE TABLE estado (
@@ -232,13 +225,6 @@ SELECT * FROM rolUsuario;
 SELECT * FROM usuario;
 SELECT * FROM estado;
 SELECT * FROM estadoProceso;
-
-
-
-
-
-ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY 'nadmin';
-
 
 
 drop table postulante;

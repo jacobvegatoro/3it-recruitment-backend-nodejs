@@ -22,12 +22,12 @@ const AuthController = {
         const user = results[0];
 
         if (!user) {
-          return res.status(401).json({ error: 'Credenciales incorrectas' });
+          return res.status(401).json({ error: 'El usuario no existe' });
         }
 
-        console.log('Usuario:', user);
-        console.log('Contraseña ingresada:', clave);
-        console.log('Contraseña almacenada:', user.clave);
+        //console.log('Usuario:', user);
+        //console.log('Contraseña ingresada:', clave);
+        //console.log('Contraseña almacenada:', user.clave);
 
         try {
           const match = await bcrypt.compare(clave, user.clave);
@@ -47,7 +47,14 @@ const AuthController = {
             { expiresIn: '1h' }
           );
 
-          res.json({ token });
+          let userdata;
+          userdata = user;
+          delete userdata.clave;
+          console.log(userdata);
+          
+          //res.json({ user, token });
+          res.json({ "user":userdata, token });
+
         } catch (compareErr) {
           console.error('Error al comparar contraseñas:', compareErr);
           return res.status(500).json({ error: 'Error interno del servidor' });
@@ -83,6 +90,48 @@ const AuthController = {
       console.error(error);
       res.status(500).json({ error: 'Error interno del servidor' });
     }
+  },
+
+  verify: async (req, res) => {
+    try {
+      //const token = req.headers['authorization'];
+      const token = req.headers.authorization.split(' ')[1];
+
+      if(!token) return res.status(401).json({ error: 'Unauthorize user' });
+
+      try{
+        const decoded = jwt.verify(token,process.env.JWT_SECRET_KEY);
+        console.log (decoded.login );
+
+        pool.query('SELECT * FROM usuario WHERE login = ? LIMIT 1', decoded.login, async (err, results) => {
+          if (err) {
+            console.error('Error en la consulta:', err);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+          }
+  
+          const user = results[0];
+  
+          if (!user) {
+            return res.status(401).json({ error: 'El usuario no existe' });
+          }
+
+          let userdata;
+          userdata = user;
+          delete userdata.clave;
+          console.log(userdata);
+
+          res.json({ "user":userdata, token });
+        });
+        
+        
+      }catch(e){
+        res.status(400).json({ error: 'Token no válido'})
+      }
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }    
   }
 
 };

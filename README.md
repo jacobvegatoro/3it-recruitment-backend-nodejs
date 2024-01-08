@@ -3,14 +3,14 @@
 
 ## Requisitos Previos
 
-- [Node 18.18.1](https://nodejs.org/en)
+- [Node](https://nodejs.org/en)
 - [MySQL](https://dev.mysql.com/downloads/workbench/)
 
 ## Ejecución del Proyecto
 
 - Clonar el repositorio:
 ```bash
-git clone https://github.com/nicoleOpazo/RecruitmentPlatform3IT
+git clone https://github.com/jacobvegatoro/3it-recruitment-backend-nodejs.git
 ```
 
 - Ejecutar script `script-recruitmentdb.sql`
@@ -48,6 +48,7 @@ CRUD completo (obtener listado, crear, editar, eliminar) más:
 CRUD completo (obtener listado, crear, editar, eliminar) más:
 
 - Obtener proceso por ID
+
 ### Entrevista 
 CRUD completo (obtener listado, crear, editar, eliminar) más:
 

@@ -5,10 +5,10 @@ USE recruitment_db;
 /* TABLA DE POSTULANTES */
 CREATE TABLE postulante (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	nombres VARCHAR(100),
-	apellidos VARCHAR(100),
+	nombres VARCHAR(100) NOT NULL,
+	apellidos VARCHAR(100) NOT NULL,
 	ciudad VARCHAR(50),
-	enlaceBizneo VARCHAR(100)
+	enlaceBizneo VARCHAR(1000)
 );
 INSERT INTO postulante (nombres, apellidos, ciudad, enlaceBizneo)
 VALUES
@@ -28,40 +28,40 @@ VALUES
 
 /* TABLA DE CLIENTES */
 CREATE TABLE cliente (
-id INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(100),
-casaMatriz VARCHAR(100)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    casaMatriz VARCHAR(100)
 );
 INSERT INTO cliente (nombre, casaMatriz)
 VALUES
 	('Banco de Chile', 'Providencia'),
-    ('Banco Estado', 'Huerfanos');
+    ('Banco Estado', 'Huérfanos');
 
-    
+
 /* TABLA CÉLULA */
 CREATE TABLE celula (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
     idCliente INT,
-    CONSTRAINT fk_cliente_id FOREIGN KEY (idCliente) REFERENCES cliente(id)
+    CONSTRAINT fk_celula_cliente FOREIGN KEY (idCliente) REFERENCES cliente(id)
 );
 INSERT INTO celula (nombre, idCliente)
 VALUES
-    ('celula 1', 1),
-    ('celula 2', 1),
-    ('celula 3', 2);
+    ('Célula 1', 1),
+    ('Célula 2', 1),
+    ('Célula 3', 2);
 
 
 /* TABLA ROL */    
 CREATE TABLE rol (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    detalle TEXT
+    detalle VARCHAR(50) NOT NULL
 );
 INSERT INTO rol (detalle)
 VALUES
-	('El rol para este proceso es XYZ'),
-    ('El rol para este proceso es ABC'),
-    ('El rol para este proceso es 123');
+	('Rol 1'),
+    ('Rol 2'),
+    ('Rol 3');
 
 
 /* TABLA PROCESO */
@@ -71,9 +71,9 @@ CREATE TABLE proceso (
     idPostulante INT,
     idRol INT,
     idCelula INT,
-    CONSTRAINT fk_postulante_id FOREIGN KEY (idPostulante) REFERENCES postulante(id),
-    CONSTRAINT fk_rol_id FOREIGN KEY (idRol) REFERENCES rol(id),
-    CONSTRAINT fk_celula_id FOREIGN KEY (idCelula) REFERENCES celula(id)
+    CONSTRAINT fk_proceso_postulante FOREIGN KEY (idPostulante) REFERENCES postulante(id),
+    CONSTRAINT fk_proceso_rol FOREIGN KEY (idRol) REFERENCES rol(id),
+    CONSTRAINT fk_proceso_celula FOREIGN KEY (idCelula) REFERENCES celula(id)
 );
 INSERT INTO proceso (idPostulante, idRol, idCelula)
 VALUES
@@ -94,7 +94,7 @@ CREATE TABLE entrevista (
     descripcionPersonal TEXT,
     preguntasCandidato TEXT,
     idProceso INT,
-    CONSTRAINT fk_proceso_id FOREIGN KEY (idProceso) REFERENCES proceso(id)
+    CONSTRAINT fk_entrevista_proceso FOREIGN KEY (idProceso) REFERENCES proceso(id)
 );
 INSERT INTO entrevista (
     fecha_entrevista,
@@ -117,10 +117,10 @@ INSERT INTO entrevista (
 /* TABLA PREGUNTA */
 CREATE TABLE pregunta (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    detalle TEXT,
+    detalle VARCHAR(100) NOT NULL,
     activo BOOLEAN,
     idRol INT,
-    CONSTRAINT fk_pregunta_rol_id FOREIGN KEY (idRol) REFERENCES rol(id)
+    CONSTRAINT fk_pregunta_rol FOREIGN KEY (idRol) REFERENCES rol(id)
 );
 INSERT INTO pregunta (detalle, activo, idRol)
 VALUES
@@ -136,8 +136,8 @@ CREATE TABLE respuesta (
     puntaje INT,
     idEntrevista INT,
     idPregunta INT,
-    CONSTRAINT fk_entrevista_id FOREIGN KEY (idEntrevista) REFERENCES entrevista(id),
-    CONSTRAINT fk_pregunta_respuesta_id FOREIGN KEY (idPregunta) REFERENCES pregunta(id)
+    CONSTRAINT fk_respuesta_entrevista FOREIGN KEY (idEntrevista) REFERENCES entrevista(id),
+    CONSTRAINT fk_respuesta_pregunta FOREIGN KEY (idPregunta) REFERENCES pregunta(id)
 );
 INSERT INTO respuesta (detalle, puntaje, idEntrevista, idPregunta)
 VALUES
@@ -149,7 +149,7 @@ VALUES
 /*TABLA ROLES DE USUARIO*/
 CREATE TABLE rolUsuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100)
+    nombre VARCHAR(50) NOT NULL
 );
 INSERT INTO rolUsuario (nombre)
 VALUES
@@ -158,16 +158,17 @@ VALUES
     
     
 /*TABLA USUARIO*/
+/*Obs: La clave de los usuarios de muestra es su mismo login*/
 CREATE TABLE usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100),
-    apellido VARCHAR(100),
-    login TEXT,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    login TEXT NOT NULL,
     clave TEXT,
     correo VARCHAR(100),
-    telefono TEXT,
+    telefono VARCHAR(30),
     idRolUsuario INT,
-    CONSTRAINT fk_rolUsuario_id FOREIGN KEY (idRolUsuario) REFERENCES rolUsuario(id)
+    CONSTRAINT fk_usuario_rol FOREIGN KEY (idRolUsuario) REFERENCES rolUsuario(id)
 );
 INSERT INTO usuario (nombre, apellido, login, clave, correo, telefono, idRolUsuario)
 VALUES
@@ -178,7 +179,7 @@ VALUES
 /*TABLA ROLES DE ESTADO*/
 CREATE TABLE estado (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100)
+    nombre VARCHAR(50) NOT NULL
 );
 INSERT INTO estado (nombre)
 VALUES
@@ -201,9 +202,9 @@ CREATE TABLE estadoProceso (
     idProceso INT,
     idEstado INT,
     idUsuario INT,
-    CONSTRAINT fk_estado_proceso_id FOREIGN KEY (idProceso) REFERENCES proceso(id),
-    CONSTRAINT fk_estado_id FOREIGN KEY (idEstado) REFERENCES estado(id),
-    CONSTRAINT fk_usuario_id FOREIGN KEY (idUsuario) REFERENCES usuario(id)
+    CONSTRAINT fk_estado_proceso_proceso FOREIGN KEY (idProceso) REFERENCES proceso(id),
+    CONSTRAINT fk_estado_proceso_estado FOREIGN KEY (idEstado) REFERENCES estado(id),
+    CONSTRAINT fk_estado_proceso_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id)
 );
 INSERT INTO estadoProceso (comentario, idProceso, idEstado, idUsuario)
 VALUES
@@ -212,7 +213,89 @@ VALUES
     ('Comentario 3', 3, 3, 3);    
 
 
-    
+/* TABLA TRITIANO */
+CREATE TABLE tritiano (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    enlaceBizneo VARCHAR(1000),
+    idCelula INT,
+    CONSTRAINT fk_tritiano_celula FOREIGN KEY (idCelula) REFERENCES celula(id)
+);
+INSERT INTO tritiano (nombres, apellidos, enlaceBizneo, idCelula)
+VALUES
+    ('Tritiano', 'Uno', 'http://www.bizneo.com/tritianouno', 1),
+    ('Tritiano', 'Dos', 'http://www.bizneo.com/tritianodos', 2),
+    ('Tritiano', 'Tres', 'http://www.bizneo.com/tritianotres', 3);
+
+
+/* TABLA CAPACITACION */
+CREATE TABLE capacitacion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fechaInicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fechaFin TIMESTAMP,
+    rolActual VARCHAR(30) NOT NULL,
+    rolEsperado VARCHAR(30),
+    idTritiano INT NOT NULL,
+    CONSTRAINT fk_capacitacion_tritiano FOREIGN KEY (idTritiano) REFERENCES tritiano(id)
+);
+INSERT INTO capacitacion (rolActual, rolEsperado, idTritiano)
+VALUES
+    ('Rol actual 1', 'Rol esperado 1', 1),
+    ('Rol actual 2', 'Rol esperado 2', 2),
+    ('Rol actual 3', 'Rol esperado 3', 3);
+
+/* TABLA REUNION */
+CREATE TABLE reunion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    objetivo VARCHAR(100),
+    temasTratados TEXT,
+    acuerdos TEXT,
+    idCapacitacion INT NOT NULL,
+    CONSTRAINT fk_reunion_capacitacion FOREIGN KEY (idCapacitacion) REFERENCES capacitacion(id)
+);
+INSERT INTO reunion (objetivo, temasTratados, acuerdos, idCapacitacion)
+VALUES
+    ('Tema reunión 1', 'Minuta reunión 1', 'Acuerdos reunión 1', 1),
+    ('Tema reunión 2', 'Minuta reunión 2', 'Acuerdos reunión 2', 2),
+    ('Tema reunión 3', 'Minuta reunión 3', 'Acuerdos reunión 3', 3);
+
+/* TABLA ENCUESTA */
+CREATE TABLE encuesta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pregunta VARCHAR(100) NOT NULL,
+    respuesta TEXT,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    idCapacitacion INT NOT NULL,
+    CONSTRAINT fk_encuesta_capacitacion FOREIGN KEY (idCapacitacion) REFERENCES capacitacion(id)
+);
+INSERT INTO encuesta (pregunta, respuesta, idCapacitacion)
+VALUES
+    ('Pregunta 1', 'Respuesta 1', 1),
+    ('Pregunta 2', 'Respuesta 2', 2),
+    ('Pregunta 3', 'Respuesta 3', 3);
+
+/* TABLA CURSO */
+CREATE TABLE curso (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(200) NOT NULL,
+    enlace VARCHAR(1000),
+    duracion DECIMAL(5,2),
+    cobertura DECIMAL(5,2),
+    comentarios TEXT,
+    fechaInicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fechaFin TIMESTAMP,
+    idCapacitacion INT NOT NULL,
+    CONSTRAINT fk_curso_capacitacion FOREIGN KEY (idCapacitacion) REFERENCES capacitacion(id)
+);
+INSERT INTO curso (titulo, enlace, duracion, cobertura, comentarios, idCapacitacion)
+VALUES
+    ('Curso 1', 'http://www.curso1.com', 10.5, 0, 'Comentarios curso 1', 1),
+    ('Curso 2', 'http://www.curso2.com', 15.3, 0, 'Comentarios curso 2', 2),
+    ('Curso 3', 'http://www.curso3.com', 20.1, 0, 'Comentarios curso 3', 3);
+
+
 SELECT * FROM postulante;
 SELECT * FROM cliente;
 SELECT * FROM celula;
@@ -227,15 +310,20 @@ SELECT * FROM estado;
 SELECT * FROM estadoProceso;
 
 
-drop table postulante;
-drop table cliente;
-drop table celula;
-drop table rol;
-drop table proceso;
-drop table entrevista;
-drop table pregunta;
 drop table respuesta;
-drop table rolUsuario;
-drop table usuario;
-drop table estado;
+drop table pregunta;
+drop table entrevista;
 drop table estadoProceso;
+drop table estado;
+drop table usuario;
+drop table rolUsuario;
+drop table proceso;
+drop table rol;
+drop table postulante;
+drop table curso;
+drop table encuesta;
+drop table reunion;
+drop table capacitacion;
+drop table tritiano;
+drop table celula;
+drop table cliente;

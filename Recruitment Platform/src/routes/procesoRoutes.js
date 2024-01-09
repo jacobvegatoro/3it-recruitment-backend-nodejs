@@ -8,5 +8,6 @@ router.post('/', requireAuth, procesoController.create);
 router.put('/:id', requireAuth, procesoController.update);
 router.delete('/:id', requireAuth, requireRole(1), procesoController.delete);
 router.get('/', requireAuth, procesoController.getAll);
+router.get('/postulante/:id', requireAuth, procesoController.getByPostulante);
 
 module.exports = router;

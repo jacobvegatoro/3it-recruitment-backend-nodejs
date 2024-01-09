@@ -71,11 +71,13 @@ exports.searchByKeyword = async (req, res) => {
     try {
         const result = await Postulante.searchByKeyword(keyword);
         
-        if (!result || result.length === 0) {
+        res.status(200).json(result);
+
+        /*if (!result || result.length === 0) {
             res.status(404).json({ message: 'No se encontraron postulantes con la palabra clave proporcionada' });
         } else {
             res.status(200).json(result);
-        }
+        }*/
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error interno del servidor' });

@@ -5,6 +5,7 @@ const { requireAuth, requireRole } = require('../middlewares/authMiddleware');
 
 router.get('/paginacion', requireAuth, entrevistaController.getAllPaginated);
 router.get('/:id', requireAuth, entrevistaController.getById);
+router.get('/proceso/:id', requireAuth, entrevistaController.getByProcesoId);
 router.post('/', requireAuth, entrevistaController.create);
 router.put('/:id', requireAuth, entrevistaController.update);
 router.delete('/:id', requireAuth, requireRole(1), entrevistaController.delete);

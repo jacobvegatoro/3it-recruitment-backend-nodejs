@@ -132,18 +132,23 @@ VALUES
 /* TABLA RESPUESTA */
 CREATE TABLE respuesta (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    detalle TEXT,
+    textoPregunta TEXT,
+    textoRespuesta TEXT,
     puntaje INT,
     idEntrevista INT,
-    idPregunta INT,
-    CONSTRAINT fk_respuesta_entrevista FOREIGN KEY (idEntrevista) REFERENCES entrevista(id),
-    CONSTRAINT fk_respuesta_pregunta FOREIGN KEY (idPregunta) REFERENCES pregunta(id)
+    CONSTRAINT fk_respuesta_entrevista FOREIGN KEY (idEntrevista) REFERENCES entrevista(id)
 );
-INSERT INTO respuesta (detalle, puntaje, idEntrevista, idPregunta)
+INSERT INTO respuesta (textoPregunta, textoRespuesta, puntaje, idEntrevista)
 VALUES
-    ('Respuesta 1', 7, 1, 1),
-    ('Respuesta 2', 5, 2, 2),
-    ('Respuesta 3', 6, 3, 3);
+    ('Pregunta 1','Respuesta 1', 7, 1),
+    ('Pregunta 2','Respuesta 2', 5, 2),
+    ('Pregunta 3','Respuesta 3', 6, 3),
+    ('Pregunta 4','Respuesta 4', 7, 1),
+    ('Pregunta 5','Respuesta 5', 5, 2),
+    ('Pregunta 6','Respuesta 6', 6, 3),
+    ('Pregunta 7','Respuesta 7', 7, 1),
+    ('Pregunta 8','Respuesta 8', 5, 2),
+    ('Pregunta 9','Respuesta 9', 6, 3);
 
 
 /*TABLA ROLES DE USUARIO*/

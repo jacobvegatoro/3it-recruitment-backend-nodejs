@@ -28,6 +28,26 @@ exports.getById = async (req, res) => {
     }
 };
 
+exports.getByProcesoId = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const result = await Entrevista.getByProcesoId(id);
+        res.status(200).json(result);
+
+        /*
+        if (!result || result.length === 0) {
+            res.status(404).json({ message: 'Entrevista no encontrado' });
+        } else {
+            res.status(200).json(result);
+        }
+        */
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
 exports.create = async (req, res) => {
     const newEntrevista = req.body;
 

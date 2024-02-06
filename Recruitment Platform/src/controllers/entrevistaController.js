@@ -53,7 +53,9 @@ exports.create = async (req, res) => {
 
     try {
         const postId = await Entrevista.create(newEntrevista);
-        res.status(201).json({ message: 'Entrevista creado', id: postId });
+        const result = await Entrevista.getById(postId);
+        //res.status(201).json({ message: 'Entrevista creado', id: postId });
+        res.status(201).json(result);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error interno del servidor' });
@@ -66,7 +68,9 @@ exports.update = async (req, res) => {
 
     try {
         await Entrevista.update(id, updatedEntrevista);
-        res.status(200).json({ message: 'Entrevista actualizado' });
+        const result = await Entrevista.getById(id);
+        //res.status(200).json({ message: 'Entrevista actualizado' });
+        res.status(200).json(result);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error interno del servidor' });

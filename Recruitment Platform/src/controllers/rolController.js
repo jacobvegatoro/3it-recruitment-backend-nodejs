@@ -21,3 +21,17 @@ exports.create = async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
+
+exports.update = async (req, res) => {
+    const id = req.params.id;
+    const updatedRol = req.body;
+
+    try {
+        await Rol.update(id, updatedRol);
+        res.status(200).json({ message: 'Rol actualizado' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+

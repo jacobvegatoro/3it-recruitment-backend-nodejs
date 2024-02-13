@@ -24,5 +24,18 @@ class Rol {
             });
         });
     }
+
+    static update(id, updatedRol) {
+        return new Promise((resolve, reject) => {
+            pool.query('UPDATE rol SET ? WHERE id = ?', [updatedRol, id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+    
 }
 module.exports = Rol;

@@ -5,6 +5,7 @@ const { requireAuth, requireRole } = require('../middlewares/authMiddleware');
 
 router.get('/', requireAuth, preguntaController.getAll);
 router.get('/:id', requireAuth, preguntaController.getById);
+router.get('/rol/:id', requireAuth, preguntaController.getByRolId);
 router.post('/', requireAuth, preguntaController.create);
 router.post('/multiples', requireAuth, preguntaController.createMultiple);
 router.put('/:id', requireAuth, preguntaController.update);

@@ -25,6 +25,18 @@ class Respuesta {
         });
     }
 
+    static getByEntrevistaId(id) {
+        return new Promise((resolve, reject) => {
+            pool.query('SELECT * FROM respuesta WHERE idEntrevista = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
     static create(respuesta) {
         return new Promise((resolve, reject) => {
             pool.query('INSERT INTO respuesta SET ?', respuesta, (err, result) => {

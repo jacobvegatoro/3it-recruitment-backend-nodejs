@@ -27,6 +27,19 @@ exports.getById = async (req, res) => {
     }
 };
 
+exports.getByEntrevistaId = async (req, res) => {
+    const idEntrevista = req.params.id;
+
+    try {
+        const result = await Respuesta.getByEntrevistaId(idEntrevista);
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
 exports.create = async (req, res) => {
     const newRespuesta = req.body;
 
@@ -73,6 +86,22 @@ exports.createMultiple = async (req, res) => {
         }
 
         res.status(200).json({ message: 'Respuestas creadas exitosamente' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+exports.updateMultiple = async (req, res) => {
+    const id = req.params.id;
+    const editRespuestas = req.body;
+
+    try {
+        for (const respuesta of editRespuestas) {
+            await Respuesta.update(respuesta.id, respuesta);
+        }
+ 
+        res.status(200).json({ message: 'Respuestas actualizadas exitosamente' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error interno del servidor' });

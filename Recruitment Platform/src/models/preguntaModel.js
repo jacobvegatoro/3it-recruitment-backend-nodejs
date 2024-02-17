@@ -25,6 +25,18 @@ class Pregunta {
         });
     }
 
+    static getByRolId(id) {
+        return new Promise((resolve, reject) => {
+            pool.query('SELECT * FROM pregunta WHERE idRol = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
     static create(pregunta) {
         return new Promise((resolve, reject) => {
             pool.query('INSERT INTO pregunta SET ?', pregunta, (err, result) => {

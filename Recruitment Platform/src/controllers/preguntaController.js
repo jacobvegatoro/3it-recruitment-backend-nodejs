@@ -27,6 +27,19 @@ exports.getById = async (req, res) => {
     }
 };
 
+exports.getByRolId = async (req, res) => {
+    const idRol = req.params.id;
+
+    try {
+        const result = await Pregunta.getByRolId(idRol);
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
 exports.create = async (req, res) => {
     const newPregunta = req.body;
 

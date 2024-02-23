@@ -2,30 +2,19 @@ const { pool } = require('../config/database');
 
 class Estadistica {
     static getEntrevistasPerMonth() {
-        let query = `
-        SELECT
-            anio,
-            JSON_OBJECTAGG(
-            mes,
-            entrevistados
-            ) AS entrevistasPorMes
-        FROM (
-            SELECT
-            YEAR(fecha_entrevista) AS anio,
-            MONTH(fecha_entrevista) AS mes,
-            COUNT(*) AS entrevistados
-            FROM
-            entrevista
-            WHERE
-            fecha_entrevista >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
-            GROUP BY
-            anio, mes
-        ) AS subquery
-        GROUP BY
-            anio
-        ORDER BY
-            anio ASC;     
-        `
+        let query =`    SELECT 
+                            YEAR(fecha_entrevista) AS anio,
+                            MONTH(fecha_entrevista) AS mes,
+                            COUNT(*) AS cantidad_entrevistas
+                        FROM 
+                            entrevista
+                        WHERE 
+                            fecha_entrevista >= CURDATE() - INTERVAL 12 MONTH
+                        GROUP BY 
+                            anio, mes
+                        ORDER BY 
+                            anio ASC, mes ASC;
+                        `
         return new Promise((resolve, reject) => {
             pool.query(query, (err, result) => {
                 if (err) {

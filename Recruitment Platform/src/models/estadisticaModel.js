@@ -24,7 +24,7 @@ class Estadistica {
         GROUP BY
             anio
         ORDER BY
-            anio DESC;     
+            anio ASC;     
         `
         return new Promise((resolve, reject) => {
             pool.query(query, (err, result) => {

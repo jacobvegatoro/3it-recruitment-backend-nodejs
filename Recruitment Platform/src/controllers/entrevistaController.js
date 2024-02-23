@@ -53,7 +53,7 @@ exports.create = async (req, res) => {
 
     try {
         const postId = await Entrevista.create(newEntrevista);
-        const result = await Entrevista.getById(postId);
+        const result = await Entrevista.getByIdSimple(postId);
         //res.status(201).json({ message: 'Entrevista creado', id: postId });
         res.status(201).json(result);
     } catch (error) {

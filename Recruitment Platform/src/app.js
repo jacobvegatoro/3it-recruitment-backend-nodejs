@@ -23,6 +23,7 @@ const usuarioRoutes = require('./routes/usuarioRoutes');
 const estadoRoutes = require('./routes/estadoRoutes');
 const estadoProcesoRoutes = require('./routes/estadoProcesoRoutes');
 const loginRoutes = require('./routes/authRoutes');
+const estadisticaRoute = require('./routes/estadisticaRoutes');
 
 app.use('/postulantes', postulanteRoutes);
 app.use('/clientes', clienteRoutes);
@@ -37,6 +38,7 @@ app.use('/usuarios', usuarioRoutes);
 app.use('/estados', estadoRoutes);
 app.use('/estadoprocesos', estadoProcesoRoutes);
 app.use('/login', loginRoutes);
+app.use('/estadisticas', estadisticaRoute )
 
 app.use((req, res) => {
     res.status(404).json({ message: 'Ruta no encontrada' });

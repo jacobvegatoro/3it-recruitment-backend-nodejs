@@ -61,20 +61,26 @@ class Entrevista {
         });
     }
 
-    static getByProcesoId(idProceso) {
+    static getByIdSimple(id) {
 
-        /*let query = "SELECT " +
+        let query = "SELECT " +
         "e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, " +
-        "e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato, " +
-        "JSON_ARRAYAGG( " +
-        "JSON_OBJECT('id', r.id, 'textoPregunta', r.textoPregunta, 'textoRespuesta', r.textoRespuesta, 'puntaje', r.puntaje) " +
-        ") as respuestas " +
+        "e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato, e.idProceso " +
         "FROM entrevista e " +
-        "LEFT JOIN respuesta r on r.idEntrevista = e.id  " +
-        "WHERE e.idProceso = ? " +
-        "GROUP BY e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, " +
-        "e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato " +
-        "ORDER BY e.fecha_entrevista DESC";*/
+        "WHERE e.id = ? ";
+
+        return new Promise((resolve, reject) => {
+            pool.query(query, [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static getByProcesoId(idProceso) {
 
         let query = "SELECT " +
         "e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, " +

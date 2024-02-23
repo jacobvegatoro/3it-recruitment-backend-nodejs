@@ -27,7 +27,7 @@ class Pregunta {
 
     static getByRolId(id) {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT * FROM pregunta WHERE idRol = ?', [id], (err, result) => {
+            pool.query('SELECT * FROM pregunta WHERE idRol = ? and activo = 1', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {

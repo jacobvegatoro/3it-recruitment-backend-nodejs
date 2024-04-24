@@ -11,6 +11,50 @@ exports.getAll = async (req, res) => {
     }
 };
 
+exports.buscarPorNombre = async (req, res) => {
+    try {
+        const { nombre } = req.query;
+        const entrevistas = await Entrevista.buscarPorNombre(nombre);
+        res.json(entrevistas);
+    } catch (error) {
+        console.error('Error al buscar entrevistas por nombre:', error);
+        res.status(500).json({ message: 'Error al buscar entrevistas por nombre' });
+    }
+};
+
+exports.buscarPorRol = async (req, res) => {
+    try {
+        const { rol } = req.query;
+        const entrevistas = await Entrevista.buscarPorRol(rol);
+        res.json(entrevistas);
+    } catch (error) {
+        console.error('Error al buscar entrevistas por rol:', error);
+        res.status(500).json({ message: 'Error al buscar entrevistas por rol' });
+    }
+};
+
+exports.buscarPorCelula = async (req, res) => {
+    try {
+        const { celula } = req.query;
+        const entrevistas = await Entrevista.buscarPorCelula(celula);
+        res.json(entrevistas);
+    } catch (error) {
+        console.error('Error al buscar entrevistas por celula:', error);
+        res.status(500).json({ message: 'Error al buscar entrevistas por celula' });
+    }
+};
+
+exports.buscarPorFecha = async (req, res) => {
+    try {
+        const { fecha } = req.query;
+        const entrevistas = await Entrevista.buscarPorFecha(fecha);
+        res.json(entrevistas);
+    } catch (error) {
+        console.error('Error al buscar entrevistas por fecha:', error);
+        res.status(500).json({ message: 'Error al buscar entrevistas por fecha' });
+    }
+};
+
 exports.getById = async (req, res) => {
     const id = req.params.id;
 

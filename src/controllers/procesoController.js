@@ -27,6 +27,39 @@ exports.getById = async (req, res) => {
     }
 };
 
+exports.buscarPorNombre = async (req, res) => {
+    try {
+        const { nombres, apellidos } = req.query;
+        const result = await Proceso.buscarPorNombre(nombres, apellidos);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error al buscar procesos por nombre del postulante:', error);
+        res.status(500).json({ message: 'Error al buscar procesos por nombre del postulante' });
+    }
+};
+
+exports.buscarPorRol = async (req, res) => {
+    const rol = req.query.rol;
+    try {
+        const result = await Proceso.buscarPorRol(rol);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error al buscar procesos por rol:', error);
+        res.status(500).json({ message: 'Error al buscar procesos por rol' });
+    }
+};
+
+exports.buscarPorCelula = async (req, res) => {
+    const celula = req.query.celula;
+    try {
+        const result = await Proceso.buscarPorCelula(celula);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error al buscar procesos por célula:', error);
+        res.status(500).json({ message: 'Error al buscar procesos por célula' });
+    }
+};
+
 exports.create = async (req, res) => {
     const newProceso = req.body;
 

@@ -5,6 +5,7 @@ const { requireAuth, requireRole } = require('../middlewares/authMiddleware');
 
 router.get('/paginacion', requireAuth, entrevistaController.getAllPaginated);
 router.get('/buscar/nombre', requireAuth, entrevistaController.buscarPorNombre);
+router.get('/buscar/apellido', requireAuth, entrevistaController.buscarPorApellido);
 router.get('/buscar/rol', requireAuth, entrevistaController.buscarPorRol);
 router.get('/buscar/celula', requireAuth, entrevistaController.buscarPorCelula);
 router.get('/buscar/fecha', requireAuth, entrevistaController.buscarPorFecha);

@@ -78,24 +78,23 @@ class Proceso {
     });
   }
 
-  static buscarPorNombre(nombres, apellidos) {
+  static buscarPorNombre(nombre) {
     const query = `
-    select pr.id, pr.fecha_ingreso,
-      JSON_OBJECT('id', ps.id, 'nombres', ps.nombres, 'apellidos', ps.apellidos, 'ciudad', ps.ciudad, 'enlaceBizneo', ps.enlaceBizneo) as postulante,
-      JSON_OBJECT('id', r.id, 'detalle', r.detalle) as rol,
-      JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'cliente', JSON_OBJECT('id', ci.id, 'nombre', ci.nombre, 'casaMatriz', ci.casaMatriz)) as celula
-    from proceso pr
-    left join postulante ps on pr.idPostulante = ps.id
-    left join rol r on pr.idRol = r.id
-    left join celula cl on pr.idCelula = cl.id
-    left join cliente ci on cl.idCliente = ci.id
-    WHERE ps.nombres LIKE ? AND ps.apellidos LIKE ?`;
+    SELECT pr.id, pr.fecha_ingreso,
+      JSON_OBJECT('id', ps.id, 'nombres', ps.nombres, 'apellidos', ps.apellidos, 'ciudad', ps.ciudad, 'enlaceBizneo', ps.enlaceBizneo) AS postulante,
+      JSON_OBJECT('id', r.id, 'detalle', r.detalle) AS rol,
+      JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'cliente', JSON_OBJECT('id', ci.id, 'nombre', ci.nombre, 'casaMatriz', ci.casaMatriz)) AS celula
+    FROM proceso pr
+    LEFT JOIN postulante ps ON pr.idPostulante = ps.id
+    LEFT JOIN rol r ON pr.idRol = r.id
+    LEFT JOIN celula cl ON pr.idCelula = cl.id
+    LEFT JOIN cliente ci ON cl.idCliente = ci.id
+    WHERE ps.nombres LIKE ?`;
 
-    const nombreQuery = `%${nombres}%`;
-    const apellidoQuery = `%${apellidos}%`;
+    const nombreQuery = `%${nombre}%`;
 
     return new Promise((resolve, reject) => {
-      pool.query(query, [nombreQuery, apellidoQuery], (err, result) => {
+      pool.query(query, [nombreQuery], (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -103,7 +102,33 @@ class Proceso {
         }
       });
     });
-}
+  }
+
+  static buscarPorApellido(apellido) {
+    const query = `
+  SELECT pr.id, pr.fecha_ingreso,
+    JSON_OBJECT('id', ps.id, 'nombres', ps.nombres, 'apellidos', ps.apellidos, 'ciudad', ps.ciudad, 'enlaceBizneo', ps.enlaceBizneo) AS postulante,
+    JSON_OBJECT('id', r.id, 'detalle', r.detalle) AS rol,
+    JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'cliente', JSON_OBJECT('id', ci.id, 'nombre', ci.nombre, 'casaMatriz', ci.casaMatriz)) AS celula
+  FROM proceso pr
+  LEFT JOIN postulante ps ON pr.idPostulante = ps.id
+  LEFT JOIN rol r ON pr.idRol = r.id
+  LEFT JOIN celula cl ON pr.idCelula = cl.id
+  LEFT JOIN cliente ci ON cl.idCliente = ci.id
+  WHERE ps.apellidos LIKE ?`;
+
+    const apellidoQuery = `%${apellido}%`;
+
+    return new Promise((resolve, reject) => {
+      pool.query(query, [apellidoQuery], (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  }
 
   static buscarPorRol(rol) {
     const query = `

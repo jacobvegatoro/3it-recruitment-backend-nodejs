@@ -63,28 +63,61 @@ class Entrevista {
 
   static buscarPorNombre(nombre) {
     const query = `
-    SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,
-    JSON_OBJECT(
-        'id', p.id,
-        'fecha_ingreso', p.fecha_ingreso,
-        'rol', JSON_OBJECT('id', r.id, 'detalle', r.detalle),
-        'celula', JSON_OBJECT('id', c.id, 'nombre', c.nombre,
-                              'cliente', JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'casaMatriz', cl.casaMatriz)
-                             ),
-        'postulante', JSON_OBJECT('id', pt.id, 'ciudad', pt.ciudad, 'nombres', pt.nombres, 'apellidos', pt.apellidos, 'enlaceBizneo', pt.enlaceBizneo)
-    ) AS proceso
-    FROM entrevista e
-    INNER JOIN proceso p ON e.idProceso = p.id
-    INNER JOIN postulante pt ON p.idPostulante = pt.id
-    INNER JOIN rol r ON p.idRol = r.id
-    INNER JOIN celula c ON p.idCelula = c.id
-    INNER JOIN cliente cl ON c.idCliente = cl.id
-        WHERE pt.nombres LIKE ? OR pt.apellidos LIKE ?;
-    `;
+  SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,
+  JSON_OBJECT(
+      'id', p.id,
+      'fecha_ingreso', p.fecha_ingreso,
+      'rol', JSON_OBJECT('id', r.id, 'detalle', r.detalle),
+      'celula', JSON_OBJECT('id', c.id, 'nombre', c.nombre,
+                            'cliente', JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'casaMatriz', cl.casaMatriz)
+                           ),
+      'postulante', JSON_OBJECT('id', pt.id, 'ciudad', pt.ciudad, 'nombres', pt.nombres, 'apellidos', pt.apellidos, 'enlaceBizneo', pt.enlaceBizneo)
+  ) AS proceso
+  FROM entrevista e
+  INNER JOIN proceso p ON e.idProceso = p.id
+  INNER JOIN postulante pt ON p.idPostulante = pt.id
+  INNER JOIN rol r ON p.idRol = r.id
+  INNER JOIN celula c ON p.idCelula = c.id
+  INNER JOIN cliente cl ON c.idCliente = cl.id
+  WHERE pt.nombres LIKE ?;
+  `;
     const searchTerm = `%${nombre}%`;
 
     return new Promise((resolve, reject) => {
-      pool.query(query, [searchTerm, searchTerm], (err, result) => {
+      pool.query(query, [searchTerm], (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  }
+
+  static buscarPorApellido(apellido) {
+    const query = `
+  SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,
+  JSON_OBJECT(
+      'id', p.id,
+      'fecha_ingreso', p.fecha_ingreso,
+      'rol', JSON_OBJECT('id', r.id, 'detalle', r.detalle),
+      'celula', JSON_OBJECT('id', c.id, 'nombre', c.nombre,
+                            'cliente', JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'casaMatriz', cl.casaMatriz)
+                           ),
+      'postulante', JSON_OBJECT('id', pt.id, 'ciudad', pt.ciudad, 'nombres', pt.nombres, 'apellidos', pt.apellidos, 'enlaceBizneo', pt.enlaceBizneo)
+  ) AS proceso
+  FROM entrevista e
+  INNER JOIN proceso p ON e.idProceso = p.id
+  INNER JOIN postulante pt ON p.idPostulante = pt.id
+  INNER JOIN rol r ON p.idRol = r.id
+  INNER JOIN celula c ON p.idCelula = c.id
+  INNER JOIN cliente cl ON c.idCliente = cl.id
+  WHERE pt.apellidos LIKE ?;
+  `;
+    const searchTerm = `%${apellido}%`;
+
+    return new Promise((resolve, reject) => {
+      pool.query(query, [searchTerm], (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -150,18 +183,18 @@ class Entrevista {
     const searchTerm = `%${nombreCelula}%`;
 
     return new Promise((resolve, reject) => {
-        pool.query(query, [searchTerm], (err, result) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result);
-            }
-        });
+      pool.query(query, [searchTerm], (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
     });
-}
+  }
 
-static buscarPorFecha(fecha) {
-  const query = `
+  static buscarPorFecha(fecha) {
+    const query = `
       SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,
       JSON_OBJECT(
           'id', p.id,
@@ -180,16 +213,16 @@ static buscarPorFecha(fecha) {
       INNER JOIN cliente cl ON c.idCliente = cl.id
       WHERE DATE(e.fecha_entrevista) = ?;
   `;
-  return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       pool.query(query, [fecha], (err, result) => {
-          if (err) {
-              reject(err);
-          } else {
-              resolve(result);
-          }
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
       });
-  });
-}
+    });
+  }
 
   static getByIdSimple(id) {
     let query =

@@ -22,6 +22,17 @@ exports.buscarPorNombre = async (req, res) => {
     }
 };
 
+exports.buscarPorApellido = async (req, res) => {
+    try {
+        const { apellido } = req.query;
+        const entrevistas = await Entrevista.buscarPorApellido(apellido);
+        res.json(entrevistas);
+    } catch (error) {
+        console.error('Error al buscar entrevistas por apellido:', error);
+        res.status(500).json({ message: 'Error al buscar entrevistas por apellido' });
+    }
+};
+
 exports.buscarPorRol = async (req, res) => {
     try {
         const { rol } = req.query;

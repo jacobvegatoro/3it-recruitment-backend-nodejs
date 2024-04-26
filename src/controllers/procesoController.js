@@ -33,8 +33,19 @@ exports.buscarPorNombre = async (req, res) => {
         const result = await Proceso.buscarPorNombre(nombres, apellidos);
         res.status(200).json(result);
     } catch (error) {
-        console.error('Error al buscar procesos por nombre del postulante:', error);
-        res.status(500).json({ message: 'Error al buscar procesos por nombre del postulante' });
+        console.error('Error al buscar procesos por nombres del postulante:', error);
+        res.status(500).json({ message: 'Error al buscar procesos por nombres del postulante' });
+    }
+};
+
+exports.buscarPorApellido = async (req, res) => {
+    try {
+        const { apellidos } = req.query;
+        const result = await Proceso.buscarPorApellido(apellidos);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error al buscar procesos por apellidos del postulante:', error);
+        res.status(500).json({ message: 'Error al buscar procesos por apellidos del postulante' });
     }
 };
 

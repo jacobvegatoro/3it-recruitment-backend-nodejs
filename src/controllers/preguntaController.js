@@ -2,8 +2,17 @@ const Pregunta = require('../models/preguntaModel');
 
 exports.getAll = async (req, res) => {
     try {
-        const result = await Pregunta.getAll();
-        res.status(200).json(result);
+        const preguntas = await Pregunta.getAll();
+        const formattedPreguntas = preguntas.map(pregunta => ({
+            id: pregunta.id,
+            detalle: pregunta.detalle,
+            activo: pregunta.activo,
+            rol: {
+                id: pregunta.rol_id,
+                detalle: pregunta.rol_detalle
+            }
+        }));
+        res.status(200).json(formattedPreguntas);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error interno del servidor' });
@@ -14,12 +23,12 @@ exports.getById = async (req, res) => {
     const id = req.params.id;
 
     try {
-        const result = await Pregunta.getById(id);
+        const pregunta = await Pregunta.getById(id);
 
-        if (!result || result.length === 0) {
+        if (!pregunta || pregunta.length === 0) {
             res.status(404).json({ message: 'Pregunta no encontrada' });
         } else {
-            res.status(200).json(result);
+            res.status(200).json(pregunta);
         }
     } catch (error) {
         console.error(error);
@@ -31,13 +40,26 @@ exports.getByRolId = async (req, res) => {
     const idRol = req.params.id;
 
     try {
-        const result = await Pregunta.getByRolId(idRol);
-
-        res.status(200).json(result);
+        const pregunta = await Pregunta.getById(id);
+    
+        if (!pregunta || pregunta.length === 0) {
+            res.status(404).json({ message: 'Pregunta no encontrada' });
+        } else {
+            const formattedPregunta = {
+                id: pregunta.id,
+                detalle: pregunta.detalle,
+                activo: pregunta.activo,
+                rol: {
+                    id: pregunta.rol_id,
+                    detalle: pregunta.rol_detalle
+                }
+            };
+            res.status(200).json(formattedPregunta);
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error interno del servidor' });
-    }
+    }    
 };
 
 exports.create = async (req, res) => {

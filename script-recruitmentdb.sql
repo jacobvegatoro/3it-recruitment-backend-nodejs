@@ -86,7 +86,7 @@ VALUES
 /* TABLA ENTREVISTA */
 CREATE TABLE entrevista (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    fecha_entrevista TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_entrevista DATETIME,
     perfilBuscado TEXT,
     comentariosPrueba TEXT,
     comentariosGenerales TEXT,

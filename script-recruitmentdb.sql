@@ -188,14 +188,14 @@ CREATE TABLE estado (
 );
 INSERT INTO estado (nombre)
 VALUES
-    ('Iniciado'),
+    ('Postulación'),
+    ('Revisión de CV'),
     ('Prueba técnica'),
-    ('Descartado prueba técnica'),
     ('Entrevista técnica'),
-    ('Descartado entrevista técnica'),
+    ('Referencias laborales'),
     ('Entrevista cliente'),
-    ('Descartado entrevista cliente'),
-    ('Entrevista psicológica'),
+    ('Entrevista psicolaboral'),
+    ('Carta oferta'),
     ('Contratado');
     
     

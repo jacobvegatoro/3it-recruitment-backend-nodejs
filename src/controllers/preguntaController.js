@@ -23,12 +23,12 @@ exports.getById = async (req, res) => {
     const id = req.params.id;
 
     try {
-        const pregunta = await Pregunta.getById(id);
+        const result = await Pregunta.getById(id);
 
-        if (!pregunta || pregunta.length === 0) {
+        if (!result || result.length === 0) {
             res.status(404).json({ message: 'Pregunta no encontrada' });
         } else {
-            res.status(200).json(pregunta);
+            res.status(200).json(result);
         }
     } catch (error) {
         console.error(error);
@@ -36,7 +36,7 @@ exports.getById = async (req, res) => {
     }
 };
 
-exports.getByRolId = async (req, res) => {
+/*exports.getByRolId = async (req, res) => {
     const idRol = req.params.id;
 
     try {
@@ -60,7 +60,7 @@ exports.getByRolId = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Error interno del servidor' });
     }    
-};
+};*/
 
 exports.getPreguntasByRolId = async (req, res) => {
     const idRol = req.params.id;

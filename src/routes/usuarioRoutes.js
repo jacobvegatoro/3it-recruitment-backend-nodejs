@@ -10,7 +10,7 @@ router.put('/actualizar/:id', requireAuth, requireRole(1), validationMiddleware.
 router.delete('/eliminar/:id', requireAuth, requireRole(1), usuarioController.delete);
 
 // para ver getById usuarios se necesita estar autenticado y ser admin
-router.get('/usuarios/:id', requireAuth, requireRole(1), usuarioController.getById);
+router.get('/:id', requireAuth, requireRole(1), usuarioController.getById);
 
 // para ver getAll usuarios se necesita estar autenticado y ser admin
 router.get('/', requireAuth, requireRole(1), usuarioController.getAll);

@@ -44,3 +44,40 @@ exports.getCelulasByClienteId = async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
+
+exports.createCliente = async (req, res) => {
+    const newCliente = req.body;
+
+    try {
+        const clienteId = await Cliente.createCliente(newCliente);
+        res.status(201).json({ message: 'Cliente creado', id: clienteId });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+exports.updateCliente = async (req, res) => {
+    const id = req.params.id;
+    const updatedCliente = req.body;
+
+    try {
+        await Cliente.updateCliente(id, updatedCliente);
+        res.status(200).json({ message: 'Cliente actualizado' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+exports.deleteCliente = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        await Cliente.deleteCliente(id);
+        res.status(200).json({ message: 'Cliente eliminado' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};

@@ -51,6 +51,41 @@ class Cliente {
         });
     }
 
+    static createCliente(cliente) {
+        return new Promise((resolve, reject) => {
+            pool.query('INSERT INTO cliente SET ?', cliente, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.insertId);
+                }
+            });
+        });
+    }
+
+    static updateCliente(id, updatedCliente) {
+        return new Promise((resolve, reject) => {
+            pool.query('UPDATE cliente SET ? WHERE id = ?', [updatedCliente, id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static deleteCliente(id) {
+        return new Promise((resolve, reject) => {
+            pool.query('DELETE FROM cliente WHERE id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
 }
 
 module.exports = Cliente;

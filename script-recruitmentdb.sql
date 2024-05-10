@@ -181,41 +181,42 @@ VALUES
     ('Nombre 2', 'Apellido 2', 'login2', '$2a$10$SPvon0fcRwXzdyRhKZOxMOpG8VliFp3PdrpF7XX/R5de3K2ccFzS2', 'email2@gmail.com', '+56991234', 2),
     ('Nombre 3', 'Apellido 3', 'login3', '$2a$10$BSYJhag4r0Mq0CPI2eYUuOLr6.o6uicj9Na5FRi0ERtOLi6b/Y0KW', 'email3@gmail.com', '+56991234', 2);
 
-/*TABLA ROLES DE ESTADO*/
-CREATE TABLE estado (
+/*TABLA ETAPAS DE PROCESO*/
+CREATE TABLE etapa (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL
 );
-INSERT INTO estado (nombre)
+INSERT INTO etapa (id, nombre)
 VALUES
-    ('Postulación'),
-    ('Revisión de CV'),
-    ('Prueba técnica'),
-    ('Entrevista técnica'),
-    ('Referencias laborales'),
-    ('Entrevista cliente'),
-    ('Entrevista psicolaboral'),
-    ('Carta oferta'),
-    ('Contratado');
+    (1,'Postulación'),
+    (2,'Revisión de CV'),
+    (3,'Prueba técnica'),
+    (4,'Entrevista técnica'),
+    (5,'Referencias laborales'),
+    (6,'Entrevista cliente'),
+    (7,'Entrevista psicolaboral'),
+    (8,'Carta oferta'),
+    (9,'Contratado');
     
-    
-/* TABLA ESTADO-PROCESO */
-CREATE TABLE estadoProceso (
+
+/* TABLA ETAPA-PROCESO */
+CREATE TABLE etapaProceso (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     comentario TEXT,
+    estado VARCHAR(15),
     idProceso INT,
-    idEstado INT,
+    idEtapa INT,
     idUsuario INT,
-    CONSTRAINT fk_estado_proceso_proceso FOREIGN KEY (idProceso) REFERENCES proceso(id),
-    CONSTRAINT fk_estado_proceso_estado FOREIGN KEY (idEstado) REFERENCES estado(id),
-    CONSTRAINT fk_estado_proceso_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id)
+    CONSTRAINT fk_etapa_proceso_proceso FOREIGN KEY (idProceso) REFERENCES proceso(id),
+    CONSTRAINT fk_etapa_proceso_etapa FOREIGN KEY (idEtapa) REFERENCES etapa(id),
+    CONSTRAINT fk_etapa_proceso_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id)
 );
-INSERT INTO estadoProceso (comentario, idProceso, idEstado, idUsuario)
+INSERT INTO etapaProceso (comentario, estado, idProceso, idEtapa, idUsuario)
 VALUES
-    ('Comentario 1', 1, 1, 1),
-    ('Comentario 2', 2, 2, 2),
-    ('Comentario 3', 3, 3, 3);    
+    ('Comentario 1', 'Pendiente', 1, 1, 1),
+    ('Comentario 2', 'Revisado', 2, 2, 2),
+    ('Comentario 3', 'Descartado', 3, 3, 3);    
 
 
 /* TABLA TRITIANO */
@@ -311,15 +312,15 @@ SELECT * FROM pregunta;
 SELECT * FROM respuesta;
 SELECT * FROM rolUsuario;
 SELECT * FROM usuario;
-SELECT * FROM estado;
-SELECT * FROM estadoProceso;
+SELECT * FROM etapa;
+SELECT * FROM etapaProceso;
 
 
 drop table respuesta;
 drop table pregunta;
 drop table entrevista;
-drop table estadoProceso;
-drop table estado;
+drop table etapaProceso;
+drop table etapa;
 drop table usuario;
 drop table rolUsuario;
 drop table proceso;

@@ -1,9 +1,9 @@
 const { pool } = require('../config/database');
 
-class EstadoProceso {
+class EtapaProceso {
     static getAll() {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT * FROM estadoProceso', (err, result) => {
+            pool.query('SELECT * FROM etapaProceso', (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -15,7 +15,7 @@ class EstadoProceso {
 
     static getById(id) {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT * FROM estadoProceso WHERE id = ?', [id], (err, result) => {
+            pool.query('SELECT * FROM etapaProceso WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -29,18 +29,18 @@ class EstadoProceso {
         return new Promise((resolve, reject) => {
             const query = `
                 SELECT 
-                    estadoProceso.id, estadoProceso.fecha, estadoProceso.comentario,
-                    estado.nombre as nombreEstado,
+                    etapaProceso.id, etapaProceso.fecha, etapaProceso.comentario, etapaProceso.estado, 
+                    etapa.nombre as nombreEtapa,
                     usuario.nombre as nombreUsuario, usuario.apellido as apellidoUsuario,
                     proceso.id as idProceso, proceso.fecha_ingreso,
                     postulante.nombres as nombresPostulante,
                     rol.detalle as detalleRol,
                     celula.nombre as nombreCelula,
                     cliente.nombre as nombreCliente
-                FROM estadoProceso
-                INNER JOIN estado ON estadoProceso.idEstado = estado.id
-                INNER JOIN usuario ON estadoProceso.idUsuario = usuario.id
-                INNER JOIN proceso ON estadoProceso.idProceso = proceso.id
+                FROM etapaProceso
+                INNER JOIN etapa ON etapaProceso.idEtapa = etapa.id
+                INNER JOIN usuario ON etapaProceso.idUsuario = usuario.id
+                INNER JOIN proceso ON etapaProceso.idProceso = proceso.id
                 INNER JOIN postulante ON proceso.idPostulante = postulante.id
                 INNER JOIN rol ON proceso.idRol = rol.id
                 INNER JOIN celula ON proceso.idCelula = celula.id
@@ -56,6 +56,18 @@ class EstadoProceso {
         });
     }
 
+    static create(etapaProceso) {
+        return new Promise((resolve, reject) => {
+            pool.query('INSERT INTO etapaProceso SET ?', etapaProceso, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.insertId);
+                }
+            });
+        });
+    }
+
 }
 
-module.exports = EstadoProceso;
+module.exports = EtapaProceso;

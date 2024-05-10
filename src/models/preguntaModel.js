@@ -15,17 +15,28 @@ class Pregunta {
 
     static getById(id) {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT pregunta.*, rol.id AS rol_id, rol.detalle AS rol_detalle FROM pregunta JOIN rol ON pregunta.idRol = rol.id WHERE pregunta.id = ? ORDER BY pregunta.id', [id], (err, rows) => {
+
+            pool.query('SELECT * FROM pregunta WHERE id = ?', [id], (err, rows) => {
                 if (err) {
                     reject(err);
                 } else {
-                    if (rows.length === 0) {
-                        resolve(null); // No se encontró ninguna pregunta
-                    } else {
-                        resolve(rows[0]); // Devuelve la primera fila de resultados
-                    }
+                    resolve(rows);
                 }
             });
+
+            /*pool.query('SELECT pregunta.*, rol.id AS rol_id, rol.detalle AS rol_detalle FROM pregunta JOIN rol ON pregunta.idRol = rol.id WHERE pregunta.id = ? ORDER BY pregunta.id', [id], (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                    if (rows.length === 0) {
+                        resolve(null); 
+                    } else {
+                        resolve(rows[0]);
+                    }
+                }
+            });*/
+ 
         })            
     }
 

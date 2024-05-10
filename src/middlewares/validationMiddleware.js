@@ -16,14 +16,14 @@ const validationMiddleware = {
 
   // validación para la actualización de un usuario
   validateUpdateUser: [
-    param('id').not().exists().withMessage('El ID del usuario no se puede modificar'),
+    param('id').trim().not().isEmpty().withMessage('El ID del usuario no se puede modificar'),
     body('nombre').trim().not().isEmpty().withMessage('El nombre no puede estar vacío'),
     body('apellido').trim().not().isEmpty().withMessage('El apellido no puede estar vacío'),
     body('login').trim().not().isEmpty().withMessage('El login no puede estar vacío'),
     body('clave').trim().not().isEmpty().withMessage('La clave no puede estar vacía'),
     body('correo').trim().not().isEmpty().withMessage('El correo no puede estar vacío').isEmail().withMessage('El correo electrónico no es válido'),
     body('telefono').trim().not().isEmpty().withMessage('El teléfono no puede estar vacío'),
-    body('idRolUsuario').not().exists().withMessage('El campo idRolUsuario no puede ser cambiado')
+    body('idRolUsuario').trim().not().isEmpty().withMessage('El campo idRolUsuario no puede ser cambiado')
   ],
 
   // manejo de errores de validación

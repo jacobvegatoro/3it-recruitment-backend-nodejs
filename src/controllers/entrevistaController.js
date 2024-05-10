@@ -4,6 +4,7 @@ const limit = 10;
 exports.getAll = async (req, res) => {
     try {
         const result = await Entrevista.getAll();
+        console.log(result);
         res.status(200).json(result);
     } catch (error) {
         console.error(error);

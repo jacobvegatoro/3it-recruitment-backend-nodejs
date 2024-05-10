@@ -10,6 +10,10 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
+console.log(new Date().toString());
+process.env.TZ = "Chile/Continental";
+console.log(new Date().toString());
+
 const postulanteRoutes = require('./routes/postulanteRoutes');
 const clienteRoutes = require('./routes/clienteRoutes');
 const celulaRoutes = require('./routes/celulaRoutes');

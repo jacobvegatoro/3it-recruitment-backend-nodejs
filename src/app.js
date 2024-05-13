@@ -24,8 +24,8 @@ const preguntaRoutes = require('./routes/preguntaRoutes');
 const respuestaRoutes = require('./routes/respuestaRoutes');
 const rolUsuarioRoutes = require('./routes/rolUsuarioRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
-const estadoRoutes = require('./routes/estadoRoutes');
-const estadoProcesoRoutes = require('./routes/estadoProcesoRoutes');
+const etapaRoutes = require('./routes/etapaRoutes');
+const etapaProcesoRoutes = require('./routes/etapaProcesoRoutes');
 const loginRoutes = require('./routes/authRoutes');
 const estadisticaRoute = require('./routes/estadisticaRoutes');
 
@@ -39,8 +39,8 @@ app.use('/preguntas', preguntaRoutes);
 app.use('/respuestas', respuestaRoutes);
 app.use('/rolesusuarios', rolUsuarioRoutes);
 app.use('/usuarios', usuarioRoutes);
-app.use('/estados', estadoRoutes);
-app.use('/estadoprocesos', estadoProcesoRoutes);
+app.use('/etapas', etapaRoutes);
+app.use('/etapasprocesos', etapaProcesoRoutes);
 app.use('/login', loginRoutes);
 app.use('/estadisticas', estadisticaRoute )
 

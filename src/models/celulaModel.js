@@ -30,6 +30,45 @@ class Celula {
             });
         });
     }
+
+    static create(celula) {
+        return new Promise((resolve, reject) => {
+            const query = 'INSERT INTO celula (nombre, idCliente) VALUES (?, ?)';
+            pool.query(query, [celula.nombre, celula.idCliente], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.insertId);
+                }
+            });
+        });
+    }      
+
+    static editarCelula(id, nombre, idCliente) {
+        return new Promise((resolve, reject) => {
+            const query = 'UPDATE celula SET nombre = ?, idCliente = ? WHERE id = ?';
+            pool.query(query, [nombre, idCliente, id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }      
+
+    static eliminarCelula(id) {
+        return new Promise((resolve, reject) => {
+            const query = 'DELETE FROM celula WHERE id = ?';
+            pool.query(query, [id], (err, result) => {
+                if (err) {
+                    reject(err); 
+                } else {
+                    resolve(result); 
+                }
+            });
+        });
+    } 
 }
 
 module.exports = Celula;

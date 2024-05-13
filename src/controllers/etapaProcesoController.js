@@ -1,6 +1,6 @@
-const EstadoProceso = require('../models/estadoProcesoModel');
+const EtapaProceso = require('../models/etapaProcesoModel');
 
-const formatEstadoProcesoResult = (result) => {
+const formatEtapaProcesoResult = (result) => {
     // Verificar si result es undefined o null
     if (!result) {
         return [];
@@ -10,6 +10,7 @@ const formatEstadoProcesoResult = (result) => {
         id: row.id,
         fecha: row.fecha,
         comentario: row.comentario,
+        estado: row.estado,
         proceso: {
             idProceso: row.idProceso,
             fecha_ingreso: row.fecha_ingreso,
@@ -27,8 +28,8 @@ const formatEstadoProcesoResult = (result) => {
                 }
             }
         },
-        estado: {
-            nombreEstado: row.nombreEstado
+        etapa: {
+            nombreEtapa: row.nombreEtapa
         },
         usuario: {
             nombreUsuario: row.nombreUsuario,
@@ -41,7 +42,7 @@ const formatEstadoProcesoResult = (result) => {
 module.exports = {
     getAll: async (req, res) => {
         try {
-            const result = await EstadoProceso.getAll();
+            const result = await EtapaProceso.getAll();
             res.status(200).json(result);
         } catch (error) {
             console.error(error);
@@ -53,10 +54,10 @@ module.exports = {
         const id = req.params.id;
 
         try {
-            const result = await EstadoProceso.getById(id);
+            const result = await EtapaProceso.getById(id);
 
             if (!result || result.length === 0) {
-                res.status(404).json({ message: 'Estado-Proceso no encontrado' });
+                res.status(404).json({ message: 'Etapa-Proceso no encontrado' });
             } else {
                 res.status(200).json(result);
             }
@@ -68,12 +69,25 @@ module.exports = {
 
     getAllWithDetails: async (req, res) => {
         try {
-            const result = await EstadoProceso.getAllWithDetails();
-            const formattedResult = formatEstadoProcesoResult(result);
+            const result = await EtapaProceso.getAllWithDetails();
+            const formattedResult = formatEtapaProcesoResult(result);
             res.status(200).json(formattedResult);
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Error interno del servidorrrr' });
         }
+    },
+
+    create: async (req, res) => {
+        const newEtapaProceso = req.body;
+
+        try {
+            const etapaProcesoId = await EtapaProceso.create(newEtapaProceso);
+            res.status(201).json({ message: 'Etapa de proceso creada', id: etapaProcesoId });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Error interno del servidor' });
+        }
     }
+
 };

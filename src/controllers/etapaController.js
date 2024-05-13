@@ -1,8 +1,8 @@
-const Estado = require('../models/estadoModel');
+const Etapa = require('../models/etapaModel');
 
 exports.getAll = async (req, res) => {
     try {
-        const result = await Estado.getAll();
+        const result = await Etapa.getAll();
         res.status(200).json(result);
     } catch (error) {
         console.error(error);
@@ -14,10 +14,10 @@ exports.getById = async (req, res) => {
     const id = req.params.id;
 
     try {
-        const result = await Estado.getById(id);
+        const result = await Etapa.getById(id);
 
         if (!result || result.length === 0) {
-            res.status(404).json({ message: 'Estado no encontrado' });
+            res.status(404).json({ message: 'Etapa no encontrada' });
         } else {
             res.status(200).json(result);
         }

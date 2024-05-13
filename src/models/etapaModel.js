@@ -1,9 +1,9 @@
 const { pool } = require('../config/database');
 
-class Estado {
+class Etapa {
     static getAll() {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT * FROM estado', (err, result) => {
+            pool.query('SELECT * FROM etapa', (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -15,7 +15,7 @@ class Estado {
 
     static getById(id) {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT * FROM estado WHERE id = ?', [id], (err, result) => {
+            pool.query('SELECT * FROM etapa WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -27,4 +27,4 @@ class Estado {
 
 }
 
-module.exports = Estado;
+module.exports = Etapa;

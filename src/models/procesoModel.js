@@ -11,7 +11,7 @@ class Proceso {
         "left join celula c on pr.idCelula = c.id";*/
 
     let query =
-      "select pr.id, pr.fecha_ingreso, " +
+      "select pr.id, pr.fecha_ingreso, pr.comentariosPrueba, pr.puntajePrueba, " +
       "JSON_OBJECT('id', ps.id, 'nombres', ps.nombres, 'apellidos', ps.apellidos, 'ciudad', ps.ciudad, 'enlaceBizneo', ps.enlaceBizneo) as postulante, " +
       "JSON_OBJECT('id', r.id, 'detalle', r.detalle) as rol, " +
       "JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'cliente', JSON_OBJECT('id', ci.id, 'nombre', ci.nombre, 'casaMatriz', ci.casaMatriz)) as celula  " +
@@ -33,7 +33,7 @@ class Proceso {
 
   static getById(id) {
     let query =
-      "select pr.id, pr.fecha_ingreso, " +
+      "select pr.id, pr.fecha_ingreso, pr.comentariosPrueba, pr.puntajePrueba, " +
       "JSON_OBJECT('id', ps.id, 'nombres', ps.nombres, 'apellidos', ps.apellidos, 'ciudad', ps.ciudad, 'enlaceBizneo', ps.enlaceBizneo) as postulante, " +
       "JSON_OBJECT('id', r.id, 'detalle', r.detalle) as rol, " +
       "JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'cliente', JSON_OBJECT('id', ci.id, 'nombre', ci.nombre, 'casaMatriz', ci.casaMatriz)) as celula  " +
@@ -57,7 +57,7 @@ class Proceso {
 
   static getByPostulante(idPostulante) {
     let query =
-      "select pr.id, pr.fecha_ingreso, " +
+      "select pr.id, pr.fecha_ingreso, pr.comentariosPrueba, pr.puntajePrueba, " +
       "JSON_OBJECT('id', ps.id, 'nombres', ps.nombres, 'apellidos', ps.apellidos, 'ciudad', ps.ciudad, 'enlaceBizneo', ps.enlaceBizneo) as postulante, " +
       "JSON_OBJECT('id', r.id, 'detalle', r.detalle) as rol, " +
       "JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'cliente', JSON_OBJECT('id', ci.id, 'nombre', ci.nombre, 'casaMatriz', ci.casaMatriz)) as celula  " +
@@ -80,7 +80,7 @@ class Proceso {
 
   static buscarPorNombre(nombre) {
     const query = `
-    SELECT pr.id, pr.fecha_ingreso,
+    SELECT pr.id, pr.fecha_ingreso, pr.comentariosPrueba, pr.puntajePrueba, 
       JSON_OBJECT('id', ps.id, 'nombres', ps.nombres, 'apellidos', ps.apellidos, 'ciudad', ps.ciudad, 'enlaceBizneo', ps.enlaceBizneo) AS postulante,
       JSON_OBJECT('id', r.id, 'detalle', r.detalle) AS rol,
       JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'cliente', JSON_OBJECT('id', ci.id, 'nombre', ci.nombre, 'casaMatriz', ci.casaMatriz)) AS celula
@@ -106,7 +106,7 @@ class Proceso {
 
   static buscarPorApellido(apellido) {
     const query = `
-  SELECT pr.id, pr.fecha_ingreso,
+  SELECT pr.id, pr.fecha_ingreso, pr.comentariosPrueba, pr.puntajePrueba, 
     JSON_OBJECT('id', ps.id, 'nombres', ps.nombres, 'apellidos', ps.apellidos, 'ciudad', ps.ciudad, 'enlaceBizneo', ps.enlaceBizneo) AS postulante,
     JSON_OBJECT('id', r.id, 'detalle', r.detalle) AS rol,
     JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'cliente', JSON_OBJECT('id', ci.id, 'nombre', ci.nombre, 'casaMatriz', ci.casaMatriz)) AS celula
@@ -132,7 +132,7 @@ class Proceso {
 
   static buscarPorRol(rol) {
     const query = `
-    SELECT pr.id, pr.fecha_ingreso,
+    SELECT pr.id, pr.fecha_ingreso, pr.comentariosPrueba, pr.puntajePrueba, 
     JSON_OBJECT('id', ps.id, 'nombres', ps.nombres, 'apellidos', ps.apellidos, 'ciudad', ps.ciudad, 'enlaceBizneo', ps.enlaceBizneo) as postulante,
     JSON_OBJECT('id', r.id, 'detalle', r.detalle) as rol,
     JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'cliente', JSON_OBJECT('id', ci.id, 'nombre', ci.nombre, 'casaMatriz', ci.casaMatriz)) as celula
@@ -158,7 +158,7 @@ class Proceso {
 
   static buscarPorCelula(celula) {
     const query = `
-    SELECT pr.id, pr.fecha_ingreso,
+    SELECT pr.id, pr.fecha_ingreso, pr.comentariosPrueba, pr.puntajePrueba, 
     JSON_OBJECT('id', ps.id, 'nombres', ps.nombres, 'apellidos', ps.apellidos, 'ciudad', ps.ciudad, 'enlaceBizneo', ps.enlaceBizneo) as postulante,
     JSON_OBJECT('id', r.id, 'detalle', r.detalle) as rol,
     JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'cliente', JSON_OBJECT('id', ci.id, 'nombre', ci.nombre, 'casaMatriz', ci.casaMatriz)) as celula

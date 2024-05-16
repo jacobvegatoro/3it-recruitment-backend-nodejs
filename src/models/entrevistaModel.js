@@ -4,9 +4,10 @@ class Entrevista {
   static getAll() {
     let query = `
       select 
-      e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales,  
+      e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosGenerales,  
       e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,  
-      JSON_OBJECT('id', p.id, 'fecha_ingreso', p.fecha_ingreso,  
+      JSON_OBJECT('id', p.id, 'fecha_ingreso', p.fecha_ingreso, 
+      'comentariosPrueba', p.comentariosPrueba, 'puntajePrueba', p.puntajePrueba, 
       'postulante', JSON_OBJECT('id', pt.id, 'ciudad', pt.ciudad, 'nombres', pt.nombres, 'apellidos',  
       pt.apellidos, 'enlaceBizneo', pt.enlaceBizneo), 
       'rol', JSON_OBJECT('id', r.id, 'detalle', r.detalle),  
@@ -33,9 +34,10 @@ class Entrevista {
 
   static getById(id) {
     let query = `select 
-    e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, 
+    e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosGenerales, 
     e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,  
-    JSON_OBJECT('id', p.id, 'fecha_ingreso', p.fecha_ingreso,  
+    JSON_OBJECT('id', p.id, 'fecha_ingreso', p.fecha_ingreso, 
+    'comentariosPrueba', p.comentariosPrueba, 'puntajePrueba', p.puntajePrueba,  
     'postulante', JSON_OBJECT('id', pt.id, 'ciudad', pt.ciudad, 'nombres', pt.nombres, 'apellidos',  
     pt.apellidos, 'enlaceBizneo', pt.enlaceBizneo), 
     'rol', JSON_OBJECT('id', r.id, 'detalle', r.detalle), 
@@ -48,23 +50,6 @@ class Entrevista {
     left join rol r on p.idRol = r.id 
     left join celula c on p.idCelula = c.id 
     left join cliente cli on c.idCliente = cli.id WHERE e.id = ?`;
-
-    /*"select " +
-      "e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales,  " +
-      "e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,  " +
-      "JSON_OBJECT('id', p.id, 'fecha_ingreso', p.fecha_ingreso,  " +
-      "'postulante', JSON_OBJECT('id', pt.id, 'ciudad', pt.ciudad, 'nombres', pt.nombres, 'apellidos',  " +
-      "pt.apellidos, 'enlaceBizneo', pt.enlaceBizneo), " +
-      "'rol', JSON_OBJECT('id', r.id, 'detalle', r.detalle),  " +
-      "'celula', JSON_OBJECT('id', c.id, 'nombre', c.nombre,  " +
-      "'cliente', JSON_OBJECT('id', cli.id, 'nombre', cli.nombre, 'casaMatriz', cli.casaMatriz)  " +
-      ")) as proceso " +
-      "from entrevista e  " +
-      "left join proceso p on e.idProceso = p.id  " +
-      "left join postulante pt on p.idPostulante = pt.id " +
-      "left join rol r on p.idRol = r.id " +
-      "left join celula c on p.idCelula = c.id " +
-      "left join cliente cli on c.idCliente = cli.id WHERE e.id = ?";*/
 
     return new Promise((resolve, reject) => {
       pool.query(query, [id], (err, result) => {
@@ -79,10 +64,11 @@ class Entrevista {
 
   static buscarPorNombre(nombre) {
     const query = `
-  SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,
+  SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosGenerales, e.recomendaciones, 
+  e.descripcionPersonal, e.preguntasCandidato,
   JSON_OBJECT(
       'id', p.id,
-      'fecha_ingreso', p.fecha_ingreso,
+      'fecha_ingreso', p.fecha_ingreso, 'comentariosPrueba', p.comentariosPrueba, 'puntajePrueba', p.puntajePrueba, 
       'rol', JSON_OBJECT('id', r.id, 'detalle', r.detalle),
       'celula', JSON_OBJECT('id', c.id, 'nombre', c.nombre,
                             'cliente', JSON_OBJECT('id', cl.id, 'nombre', cl.nombre, 'casaMatriz', cl.casaMatriz)
@@ -112,9 +98,10 @@ class Entrevista {
 
   static buscarPorApellido(apellido) {
     const query = `
-  SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,
+  SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosGenerales, e.recomendaciones, 
+  e.descripcionPersonal, e.preguntasCandidato,
   JSON_OBJECT(
-      'id', p.id,
+      'id', p.id, 'comentariosPrueba', p.comentariosPrueba, 'puntajePrueba', p.puntajePrueba, 
       'fecha_ingreso', p.fecha_ingreso,
       'rol', JSON_OBJECT('id', r.id, 'detalle', r.detalle),
       'celula', JSON_OBJECT('id', c.id, 'nombre', c.nombre,
@@ -145,9 +132,10 @@ class Entrevista {
 
   static buscarPorRol(rol) {
     const query = `
-      SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,
+      SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosGenerales, e.recomendaciones, 
+      e.descripcionPersonal, e.preguntasCandidato,
       JSON_OBJECT(
-          'id', p.id,
+          'id', p.id, 'comentariosPrueba', p.comentariosPrueba, 'puntajePrueba', p.puntajePrueba, 
           'fecha_ingreso', p.fecha_ingreso,
           'rol', JSON_OBJECT('id', r.id, 'detalle', r.detalle),
           'celula', JSON_OBJECT('id', c.id, 'nombre', c.nombre,
@@ -178,9 +166,10 @@ class Entrevista {
 
   static buscarPorCelula(nombreCelula) {
     const query = `
-        SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,
+        SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosGenerales, e.recomendaciones, 
+        e.descripcionPersonal, e.preguntasCandidato,
         JSON_OBJECT(
-            'id', p.id,
+            'id', p.id, 'comentariosPrueba', p.comentariosPrueba, 'puntajePrueba', p.puntajePrueba, 
             'fecha_ingreso', p.fecha_ingreso,
             'rol', JSON_OBJECT('id', r.id, 'detalle', r.detalle),
             'celula', JSON_OBJECT('id', c.id, 'nombre', c.nombre,
@@ -211,9 +200,10 @@ class Entrevista {
 
   static buscarPorFecha(fecha) {
     const query = `
-      SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato,
+      SELECT e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosGenerales, e.recomendaciones, 
+      e.descripcionPersonal, e.preguntasCandidato,
       JSON_OBJECT(
-          'id', p.id,
+          'id', p.id, 'comentariosPrueba', p.comentariosPrueba, 'puntajePrueba', p.puntajePrueba, 
           'fecha_ingreso', p.fecha_ingreso,
           'rol', JSON_OBJECT('id', r.id, 'detalle', r.detalle),
           'celula', JSON_OBJECT('id', c.id, 'nombre', c.nombre,
@@ -243,7 +233,7 @@ class Entrevista {
   static getByIdSimple(id) {
     let query =
       "SELECT " +
-      "e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, " +
+      "e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosGenerales, " +
       "e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato, e.idProceso " +
       "FROM entrevista e " +
       "WHERE e.id = ? ";
@@ -262,7 +252,7 @@ class Entrevista {
   static getByProcesoId(idProceso) {
     let query =
       "SELECT " +
-      "e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosPrueba, e.comentariosGenerales, " +
+      "e.id, e.fecha_entrevista, e.perfilBuscado, e.comentariosGenerales, " +
       "e.recomendaciones, e.descripcionPersonal, e.preguntasCandidato, e.idProceso " +
       "FROM entrevista e " +
       "WHERE e.idProceso = ? " +

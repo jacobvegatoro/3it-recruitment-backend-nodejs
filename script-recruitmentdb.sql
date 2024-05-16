@@ -67,6 +67,8 @@ VALUES
 /* TABLA PROCESO */
 CREATE TABLE proceso (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    comentariosPrueba TEXT,
+    puntajePrueba INT,
     fecha_ingreso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     idPostulante INT,
     idRol INT,
@@ -88,7 +90,6 @@ CREATE TABLE entrevista (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fecha_entrevista DATETIME,
     perfilBuscado TEXT,
-    comentariosPrueba TEXT,
     comentariosGenerales TEXT,
     recomendaciones TEXT,
     descripcionPersonal TEXT,

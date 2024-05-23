@@ -76,7 +76,9 @@ exports.create = async (req, res) => {
 
     try {
         const postId = await Proceso.create(newProceso);
-        res.status(201).json({ message: 'Proceso creado', id: postId });
+        const procesoNuevo = await Proceso.getById(postId);
+        //res.status(201).json({ message: 'Proceso creado', id: postId });
+        res.status(201).json(procesoNuevo);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error interno del servidor' });

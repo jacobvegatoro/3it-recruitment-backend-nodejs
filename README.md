@@ -1,4 +1,4 @@
-# Plataforma de reclutamiento
+# Plataforma de reclutamiento - Backend
 Recruitment es una plataforma que permite registrar entrevistas técnicas de los postulantes, independiente del perfil al cual postule. Contiene todas las acciones que permiten desde la creación de roles, clientes y preguntas, hasta el desarrollo de la entrevista misma, agregando comentarios a la entrevista y puntaje a las respuestas entregadas.
 
 Consiste en un conjunto de APIs creadas en Node y Express, usando autenticación JWT y persistiendo los datos en una base MySQL. 
@@ -10,12 +10,13 @@ Consiste en un conjunto de APIs creadas en Node y Express, usando autenticación
 
 ## Ejecución del Proyecto
 
+- Dentro de MySQL, ejecuta los comandos del archivo `script-recruitmentdb.sql`
 - Clonar el repositorio:
 ```bash
 git clone https://github.com/jacobvegatoro/3it-recruitment-backend-nodejs.git
 ```
 
-- Dentro de MySQL, ejecuta los comandos del archivo `script-recruitmentdb.sql`
+- Ingresar al directorio que se creará ```cd 3it-recruitment-backend-nodejs```
 - Cambia el nombre del archivo `.env.template` por `.env`
 - Modifica los valores del archivo `.env`:
     - JWT_SECRET_KEY: secreto JWT
@@ -29,7 +30,7 @@ git clone https://github.com/jacobvegatoro/3it-recruitment-backend-nodejs.git
 - Iniciar el proyecto con el comando `npm start` 
 
 
-## Endpoints:
+## Endpoints
 
 ### Postulante
 

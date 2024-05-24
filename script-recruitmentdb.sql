@@ -235,7 +235,6 @@ INSERT INTO entrevista (
     id, 
     fecha_entrevista,
     perfilBuscado,
-    comentariosPrueba,
     comentariosGenerales,
     recomendaciones,
     descripcionPersonal,
@@ -243,11 +242,11 @@ INSERT INTO entrevista (
     idProceso
 ) VALUES
 	(1, '2023-11-30 10:00:00', 'Perfil 1', 
-    'Comentario prueba 1', 'Comentario general 1', 'Recomendación 1', 'Descripción personal 1', 'Preguntas candidato 1', 1),
+    'Comentario general 1', 'Recomendación 1', 'Descripción personal 1', 'Preguntas candidato 1', 1),
 	(2, '2023-11-30 11:30:00', 'Perfil 2', 
-    'Comentario prueba 2', 'Comentario general 2', 'Recomendación 2', 'Descripción personal 2', 'Preguntas candidato 2', 2),
+    'Comentario general 2', 'Recomendación 2', 'Descripción personal 2', 'Preguntas candidato 2', 2),
 	(3, '2023-11-30 14:45:00', 'Perfil 3', 
-    'Comentario prueba 3', 'Comentario general 3', 'Recomendación 3', 'Descripción personal 3', 'Preguntas candidato 3', 1);
+    'Comentario general 3', 'Recomendación 3', 'Descripción personal 3', 'Preguntas candidato 3', 1);
 
 INSERT INTO pregunta (id, detalle, activo, idRol)
 VALUES

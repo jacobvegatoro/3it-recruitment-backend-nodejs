@@ -9,13 +9,13 @@ router.get('/', requireAuth, celulaController.getAll);
 // Obtener una celula por su ID
 router.get('/:id', requireAuth, celulaController.getById);
 
-// Crear una nueva celula
-router.post('/crear', requireAuth, celulaController.createCelula);
+// Crear una nueva celula (Rol administrador)
+router.post('/crear', requireAuth, requireRole([1]), celulaController.createCelula);
 
-// Editar una celula existente
-router.put('/actualizar/:id', requireAuth, celulaController.editarCelula);
+// Editar una celula existente (Rol administrador)
+router.put('/actualizar/:id', requireAuth, requireRole([1]), celulaController.editarCelula);
 
-// Eliminar una celula
-router.delete('/eliminar/:id', requireAuth, celulaController.eliminarCelula);
+// Eliminar una celula (Rol administrador)
+router.delete('/eliminar/:id', requireAuth, requireRole([1]), celulaController.eliminarCelula);
 
 module.exports = router;

@@ -10,9 +10,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-console.log(new Date().toString());
 process.env.TZ = "Chile/Continental";
-console.log(new Date().toString());
 
 const postulanteRoutes = require('./routes/postulanteRoutes');
 const clienteRoutes = require('./routes/clienteRoutes');
@@ -55,5 +53,4 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
     console.log(`Servidor en ejecución en el puerto ${process.env.PORT}`);
-    console.log(`Secreto: ${process.env.JWT_SECRET_KEY}`)
 });

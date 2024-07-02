@@ -28,10 +28,14 @@ const requireAuth = (req, res, next) => {
 // Middleware opcional para autorización basada en roles
 // aplicarlo a rutas específicas para asegurarse de que solo los usuarios con roles específicos tengan acceso
 const requireRole = (role) => (req, res, next) => {
-  if (req.user && req.user.idRolUsuario === role) {
-    // El usuario tiene el rol requerido
+  // El usuario tiene el rol requerido
+  /*if (req.user && req.user.idRolUsuario === role) {
     next();
-  } else {
+  }*/ 
+  if (req.user && role.includes(req.user.idRolUsuario)) {
+    next();
+  } 
+  else {
     return res.status(403).json({ error: 'Acceso prohibido. Permiso insuficiente.' });
   }
 };
